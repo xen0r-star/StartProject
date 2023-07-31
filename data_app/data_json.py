@@ -18,3 +18,7 @@ def load_info():
     with open("data_app/info.json", "r") as file:
         data = json.load(file)
         return data
+    
+def save_info(info):
+    with open("data_app/info.json", "w") as file:
+        json.dump(info, file)

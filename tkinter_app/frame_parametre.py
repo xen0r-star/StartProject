@@ -2,7 +2,7 @@ from tkinter import *
 from PIL import Image, ImageTk
 from data_app.data_json import save_data, load_data, load_info
 from tkinter_app.other_module import delete_frame_content
-from utilities import pseudo
+from utilities import pseudo, content_folder
 
 def Frame_parametre(event, content_frame, label_photo_user, text_label_user_name):
     delete_frame_content(content_frame) 
@@ -15,19 +15,25 @@ def Frame_parametre(event, content_frame, label_photo_user, text_label_user_name
     info = load_info()
     color_content = info["color_content"]
     color_pseudo = info["color_pseudo"]
+    color_text = info["color_text"]
+    color_zone = info["color_zone"]
+
+    icon_type = info["icon_type"]
     p1_pseudo = info["p1_pseudo"]
     p2_pseudo = info["p2_pseudo"]
+
+
 
     Parametre_user_frame = Frame(content_frame, bg=color_content)
     Parametre_user_frame.pack(side=LEFT, anchor=N, padx=35, pady=30)
 
+
     photo_user_parametre = ImageTk.PhotoImage(
-        image=Image.open("Picture/User/User-" + str(user_profil) + ".png").resize((100, 100), Image.LANCZOS)
+        image=Image.open(user_profil if content_folder("Picture/User/") == True else "Picture/App/Empty.png").resize((100, 100), Image.LANCZOS)
     )
     label_user_parametre = Label(Parametre_user_frame, image=photo_user_parametre, bg=color_content)
     label_user_parametre.image = photo_user_parametre
     label_user_parametre.pack(pady=5)
-
 
     parametre_button_frame = Frame(Parametre_user_frame, bg=color_content)
     parametre_button_frame.pack(anchor=S, fill=X)
@@ -53,44 +59,53 @@ def Frame_parametre(event, content_frame, label_photo_user, text_label_user_name
     button_right.image = photo_right
     button_right.pack(ipadx=2, ipady=2, side=LEFT, expand=True, fill=X)
 
-    def button_parametre_left(event):
-        nonlocal user_profil
-        user_profil -= 1
-        if user_profil <= 0:
-            user_profil = 9
 
-        photo_user_parametre = ImageTk.PhotoImage(
-            image=Image.open("Picture/User/User-" + str(user_profil) + ".png").resize((100, 100), Image.LANCZOS)
-        )
-        label_user_parametre.photo_parametre_on = photo_user_parametre
-        label_user_parametre.config(image=photo_user_parametre)
+    if content_folder("Picture/User/") == True:
+        number_liste = info["liste_profil"].index(user_profil)
+    else:
+        number_liste = None
+
+    def button_parametre_left(event):
+        nonlocal number_liste
+        if number_liste != None:
+            number_liste -= 1
+            if number_liste < 0:
+                number_liste = len(info["liste_profil"])-1
+
+            photo_user_parametre = ImageTk.PhotoImage(
+                image=Image.open(info["liste_profil"][number_liste]).resize((100, 100), Image.LANCZOS)
+            )
+            label_user_parametre.photo_parametre_on = photo_user_parametre
+            label_user_parametre.config(image=photo_user_parametre)
 
     button_left.bind("<Button-1>", button_parametre_left)
 
     def button_parametre_right(event):
-        nonlocal user_profil
-        user_profil += 1
-        if user_profil >= 10:
-            user_profil = 1
+        nonlocal number_liste
+        if number_liste != None:
+            number_liste += 1
+            if number_liste >= len(info["liste_profil"]):
+                number_liste = 0
 
-        photo_user_parametre = ImageTk.PhotoImage(
-            image=Image.open("Picture/User/User-" + str(user_profil) + ".png").resize((100, 100), Image.LANCZOS)
-        )
-        label_user_parametre.photo_parametre_on = photo_user_parametre
-        label_user_parametre.config(image=photo_user_parametre)
+            photo_user_parametre = ImageTk.PhotoImage(
+                image=Image.open(info["liste_profil"][number_liste]).resize((100, 100), Image.LANCZOS)
+            )
+            label_user_parametre.photo_parametre_on = photo_user_parametre
+            label_user_parametre.config(image=photo_user_parametre)
 
     button_right.bind("<Button-1>", button_parametre_right)
     
     def button_parametre_save(event):
-        nonlocal user_name, user_color
-        photo_user = ImageTk.PhotoImage(
-            image=Image.open("Picture/User/User-" + str(user_profil) + ".png").resize((125, 125), Image.LANCZOS)
-        )
-        label_photo_user.photo_parametre_on = photo_user
-        label_photo_user.config(image=photo_user)
+        nonlocal number_liste
+        if number_liste != None:
+            photo_user = ImageTk.PhotoImage(
+                image=Image.open(info["liste_profil"][number_liste]).resize((125, 125), Image.LANCZOS)
+            )
+            label_photo_user.photo_parametre_on = photo_user
+            label_photo_user.config(image=photo_user)
 
-        data["user_profil"] = user_profil
-        save_data(data)
+            data["user_profil"] = info["liste_profil"][number_liste]
+            save_data(data)
 
     button_save.bind("<Button-1>", button_parametre_save)
 
@@ -102,7 +117,7 @@ def Frame_parametre(event, content_frame, label_photo_user, text_label_user_name
     Parametre_name_frame = Frame(Parametre_NC_frame, bg=color_content)
     Parametre_name_frame.pack(side=TOP, anchor=N, pady=15)
 
-    text_label_parametre_name = Label(Parametre_name_frame, text=user_name, font=("Arial", 14), bg="#2a2933", fg="#ffffff", width=19)
+    text_label_parametre_name = Label(Parametre_name_frame, text=user_name, font=("Arial", 14), bg=color_zone, fg=color_text, width=19)
     text_label_parametre_name.pack(fill=X, side=LEFT, anchor=W, ipadx=3, ipady=3)
 
     photo_alea = ImageTk.PhotoImage(
@@ -129,7 +144,7 @@ def Frame_parametre(event, content_frame, label_photo_user, text_label_user_name
     for i in range(1, 6):
         if user_color == i: 
             photo_color_parametre = ImageTk.PhotoImage(
-                image=Image.open("Picture/App/Color-on" + str(i) + ".png").resize((30, 30), Image.LANCZOS)
+                image=Image.open("Picture/App/" + icon_type + "/Color-on" + str(i) + ".png").resize((30, 30), Image.LANCZOS)
             )
         else:
             photo_color_parametre = ImageTk.PhotoImage(
@@ -146,7 +161,7 @@ def Frame_parametre(event, content_frame, label_photo_user, text_label_user_name
     for i in range(6, 11):
         if user_color == i: 
             photo_color_parametre = ImageTk.PhotoImage(
-                image=Image.open("Picture/App/Color-on" + str(i) + ".png").resize((30, 30), Image.LANCZOS)
+                image=Image.open("Picture/App/" + icon_type + "/Color-on" + str(i) + ".png").resize((30, 30), Image.LANCZOS)
             )
         else:
             photo_color_parametre = ImageTk.PhotoImage(
@@ -168,7 +183,7 @@ def Frame_parametre(event, content_frame, label_photo_user, text_label_user_name
         text_label_user_name["fg"] = color_pseudo[user_color-1]
 
         new_image = ImageTk.PhotoImage(
-            image=Image.open("Picture/App/Color-on" + str(color) + ".png").resize((30, 30), Image.LANCZOS)
+            image=Image.open("Picture/App/" + icon_type + "/Color-on" + str(color) + ".png").resize((30, 30), Image.LANCZOS)
         )
         button.config(image=new_image)
         button.image = new_image
