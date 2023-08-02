@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="shortcut icon" href="Picture/App/logo.ico" type="image/x-icon">
+    <title>StartProject</title>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        body {
+            font-family: "Helvetica Neue", sans-serif;
+            background: #0D1117;
+            color: white;
+            
+        }
+    </style>
+</head>
+<body>
+    <div id="a"></div>
+    <script>
+        fetch('https://raw.githubusercontent.com/xen0r-star/StartProject/ac4d4dfa926cf6c9047f0e35c4d80920d617f68f/README.md')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('a').innerHTML = marked.parse(data);
+            });
+    </script>
+</body>
+</html>
