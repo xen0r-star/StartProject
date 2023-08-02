@@ -1,26 +1,169 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <link rel="shortcut icon" href="Picture/App/logo.ico" type="image/x-icon">
     <title>StartProject</title>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <style>
+        .logo {
+            width: 80%;
+        }
+
         body {
-            font-family: "Helvetica Neue", sans-serif;
+            font-family: Helvetica Neue, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
             background: #0D1117;
-            color: white;
-            
+            color: #E6EDF3;
+        }
+
+        .readme {
+            max-width: 800px;
+            margin: 0 auto;
+            box-shadow: 0 2px 5px rgb(0, 0, 0, 10);
+            border: 1px #30363D solid;
+            padding: 20px;
+            border-radius: 1vw;
+        }
+
+        h1 {
+            font-size: 32px;
+            margin-top: 0;
+        }
+
+        p {
+            margin: 1em 0;
+        }
+
+        a {
+            color: #0366d6;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        code {
+            font-family: 'Courier New', monospace;
+            background-color: #161b22;
+            padding: 16px 16px;
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 16px;
+            font-size: .95em;
+        }
+
+        ul {
+            margin: 1em 0;
+            padding-left: 2em;
+        }
+
+        li {
+            margin: 5px 0;
+        }
+
+        h2 {
+            padding-bottom: 0.3em;
+            font-size: 1.5em;
+            border-bottom: 1px solid #30363D;
+        }
+
+        hr {
+            height: 0.25em;
+            padding: 0;
+            margin: 24px 0;
+            background-color: #30363D;
+            border: 0;
+        }
+
+        span {
+            position: fixed;
+            bottom: 50px;
+            right: 50px;
+        }
+
+        button {
+            background: #ffffff00;
+            border: 0;
+            cursor: pointer;
+        }
+
+        #b {
+            width: 3em;
         }
     </style>
 </head>
+
 <body>
-    <div id="a"></div>
+    <div class="readme" id="a"></div>
+    <span>
+        <button onclick="lumiere()">
+            <img src="Picture/App/Sun.png" id="b">
+        </button>
+    </span>
     <script>
         fetch('https://raw.githubusercontent.com/xen0r-star/StartProject/ac4d4dfa926cf6c9047f0e35c4d80920d617f68f/README.md')
             .then(response => response.text())
             .then(data => {
                 document.getElementById('a').innerHTML = marked.parse(data);
             });
+
+
+        function copyToClipboard(text) {
+            var textarea = document.createElement('textarea');
+            textarea.value = text;
+            textarea.style.position = 'fixed';
+            textarea.style.top = 0;
+            textarea.style.left = 0;
+            textarea.style.opacity = 0;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+        }
+
+        setInterval(function () {
+            const aElement = document.getElementById('a');
+            if (aElement.innerHTML !== "") {
+                const codeElements = document.querySelectorAll('code');
+                const hasCopiedButton = codeElements[0].querySelector('button');
+                if (!hasCopiedButton) {
+                    codeElements.forEach(function (codeElement) {
+                        const button = document.createElement('button');
+                        button.textContent = 'Copier';
+                        button.onclick = function () {
+                            copyToClipboard(codeElement.textContent);
+                            alert('Code copié dans le presse-papiers !');
+                        };
+                        codeElement.appendChild(button);
+                    });
+                }
+            }
+        }, 100);
+
+        function invertColors(valeur) {
+            const elementsToInvert = document.querySelectorAll('body, p, a, code, ul, li, h2, hr');
+            elementsToInvert.forEach(element => {
+                element.style.filter = "invert(" + valeur + "%)";
+            });
+        }
+
+        m = true
+        function lumiere() {
+            if (m == true) {
+                m = false
+                invertColors(100)
+                document.getElementById('b').src = "Picture/App/Moon.png";
+            } else {
+                m = true
+                invertColors(0)
+                document.getElementById('b').src = "Picture/App/Sun.png";
+            }
+        }
     </script>
 </body>
+
 </html>
