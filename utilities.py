@@ -1,13 +1,13 @@
 import random
-import ctypes
 import os
 from tkinter import *
+import sys 
+
 
 def closing(icon, win):
     icon.stop()
-    # nid = (icon._data.hWnd, 0)
-    # ctypes.windll.shell32.Shell_NotifyIconW(2, ctypes.byref(nid)) # Supprimer l'icône de la barre des tâches en utilisant ctypes
     win.destroy()
+    sys.exit("Close Programme")  
 
 def pseudo(p1_pseudo, p2_pseudo):
     pseudo = random.choice(p1_pseudo) + random.choice(p2_pseudo)

@@ -89,9 +89,9 @@ def main_pystray(win, event, content_frame, label_photo_user, text_label_user_na
 
     menu = (
         Start_Project_submenu,
-        xen0r_star_submenu,
-        pystray.MenuItem("Aide", after_click),
         pystray.MenuItem("Parametre", after_click),
+        pystray.MenuItem("Aide", after_click),
+        xen0r_star_submenu,
         pystray.MenuItem("Exit", after_click)
     )
 
