@@ -1,13 +1,10 @@
 import random
-import os
+import os, signal
 from tkinter import *
-import sys 
 
-
-def closing(icon, win):
-    icon.stop()
-    win.destroy()
-    sys.exit("Close Programme")  
+def closing():
+    print("Close programme")
+    os.kill(os.getpid(), signal.SIGINT) # arreter le serveur
 
 def pseudo(p1_pseudo, p2_pseudo):
     pseudo = random.choice(p1_pseudo) + random.choice(p2_pseudo)

@@ -1,125 +1,83 @@
 <p align="center">
   <a href="" rel="noopener">
-    <img src="https://i.imgur.com/AZ2iWek.png" alt="Logo du projet" class="logo"></a>
+    <img src="https://i.imgur.com/Zv1AHu4.png" alt="Logo du projet" class="logo"></a>
 </p>
-<h2 align="center">StartProject</h2>
+<h1 align="center">StartProject</h1>
 
 <div align="center">
 
-[![Hackathon](https://img.shields.io/badge/hackathon-nom-orange.svg)](http://hackathon.url.com)
-[![Statut](https://img.shields.io/badge/statut-actif-success.svg)]()
-[![Problèmes GitHub](https://img.shields.io/github/issues/kylelobo/The-Documentation-Compendium.svg)](https://github.com/kylelobo/The-Documentation-Compendium/issues)
-[![Demandes de tirage GitHub](https://img.shields.io/github/issues-pr/kylelobo/The-Documentation-Compendium.svg)](https://github.com/kylelobo/The-Documentation-Compendium/pulls)
-[![Licence](https://img.shields.io/badge/licence-MIT-blue.svg)](LICENSE.md)
+[![StartProject](https://img.shields.io/badge/site-StartProject-red.svg)](https://xen0r-star.github.io/StartProject/)
+[![Python](https://img.shields.io/badge/Python-V3.11.4-yellow.svg)](https://www.python.org/)
+[![Problèmes GitHub](https://img.shields.io/github/issues/xen0r-star/StartProject.svg)](https://github.com/xen0r-star/StartProject/issues)
+[![Pull GitHub](https://img.shields.io/github/issues-pr/xen0r-star/StartProject.svg)](https://github.com/xen0r-star/StartProject/pulls)
+[![Licence](https://img.shields.io/badge/licence-CC_BY--NC_4.0-blue.svg)](LICENSE.md)
 
 </div>
 
----
-
-<p align="center"> Quelques lignes décrivant votre projet.
-    <br> 
-</p>
-
 ## 📝 Table des matières
 
-- [Énoncé du Problème](#enonce_du_probleme)
-- [Idée / Solution](#idee)
-- [Dépendances / Limitations](#limites)
-- [Perspectives d'Avenir](#perspectives_avenir)
-- [Configuration de l'environnement local](#demarrage)
-- [Utilisation](#utilisation)
-- [Technologies Utilisées](#stack_technologique)
-- [Contribution](../CONTRIBUTING.md)
-- [Auteurs](#auteurs)
-- [Remerciements](#remerciements)
+- [❓ Explication](#❓-explication)
+- [💡 But](#💡-but)
+- [🏁 Démarrage](#🏁-démarrage)
+- [⛏️ Technologies Utilisées](#⛏️-construit-avec)
+- [🖼️ Image](#🖼️-source-des-images)
+- [📜 Licence](#📜-licence)
+- [✍️ Auteur](#✍️-auteur)
 
-## 🧐 Énoncé du Problème <a name = "enonce_du_probleme"></a>
+## ❓ Explication <a name = "Explication"></a>
 
-Il est utile de concevoir et de suivre un format spécifique lors de la rédaction d'un énoncé de problème. Bien qu'il existe plusieurs options pour le faire, le format suivant est un modèle simple et direct souvent utilisé en Analyse d'Affaires pour se concentrer sur la définition du problème.
+StartProject est une application puissante et conviviale conçue pour faciliter la création de projets et la modifications de projet. Cette application simplifiera le processus de mise en place de vos projets et vous fera gagner un temps précieux.
 
-- IDÉAL : Cette section est utilisée pour décrire l'état souhaité ou "à atteindre" du processus ou du produit. Dans l'ensemble, cette section devrait illustrer à quoi ressemblerait l'environnement attendu une fois que la solution est mise en œuvre.
-- RÉALITÉ : Cette section est utilisée pour décrire l'état actuel ou "tel qu'il est" du processus ou du produit.
-- CONSÉQUENCES : Cette section est utilisée pour décrire les impacts sur l'entreprise si le problème n'est pas résolu ou amélioré. Cela inclut les coûts associés à la perte d'argent, de temps, de productivité, d'avantage concurrentiel, etc.
+## 💡 But <a name = "But"></a>
 
-Suivre ce format aboutira à un document fonctionnel qui peut être utilisé pour comprendre le problème et solliciter des exigences qui mèneront à une solution gagnante.
+1. Création de projet facile : Notre application vous permettra de créer rapidement un nouveau projet en remplissant simplement quelques informations essentielles.
 
-## 💡 Idée / Solution <a name = "idee"></a>
+2. Intégration avec GitHub : Avec notre application, vous aurez la possibilité de lier votre compte GitHub, et si vous le souhaitez, la création du projet sera automatiquement synchronisée avec votre compte GitHub. Cela signifie que le projet sera automatiquement créé sur votre compte GitHub, prêt à être partagé avec la communauté ou votre équipe.
 
-Cette section est utilisée pour décrire des solutions potentielles.
+3. Fonctionnalité de Pull Request : Notre application vous permettra également de créer des Pull Requests directement depuis l'interface. Vous pourrez soumettre des modifications à votre projet en quelques clics, sans avoir à quitter l'application.
 
-Une fois les sections idéale, réalité et conséquences
-complétées et comprises, il devient plus facile de fournir une solution pour résoudre le problème.
 
-## ⛓️ Dépendances / Limitations <a name = "limites"></a>
+## 🏁 Démarrage <a name = "Demarrage"></a>
 
-- Quelles sont les dépendances de votre projet ?
-- Décrire chaque limitation en termes détaillés mais concis
-- Expliquer pourquoi chaque limitation existe
-- Fournir les raisons pour lesquelles chaque limitation n'a pas pu être surmontée en utilisant la/les méthode(s) choisie(s) pour l'acquisition.
-- Évaluer l'impact de chaque limitation par rapport aux conclusions générales de votre projet et, le cas échéant, décrire comment ces limitations pourraient indiquer la nécessité de recherches supplémentaires.
-
-## 🚀 Perspectives d'Avenir <a name = "perspectives_avenir"></a>
-
-Écrire sur ce que vous n'avez pas pu développer pendant le hackathon ; et sur ce que votre projet peut réaliser à l'avenir.
-
-## 🏁 Démarrage <a name = "demarrage"></a>
-
-Ces instructions vous permettront d'obtenir une copie du projet sur votre machine locale à des fins de développement et de test. Voir [déploiement](#deployment) pour les notes sur le déploiement du projet sur un système en direct.
-
+Ces instructions simples vous permettront d'obtenir une copie du projet sur votre machine locale afin de pouvoir l'utiliser
 ### Prérequis
 
-De quoi avez-vous besoin pour installer le logiciel et comment les installer ?
-Exemples donnés
+Vous aurez besoin de [Python 3.11.4](https://www.python.org/) et [Git 2.37.3](https://git-scm.com/) ou d'une version ultérieure installée sur votre système. Assurez-vous de mettre à jour votre installation Python et Git avant de commencer à utiliser l'application.
 
 ### Installation
 
-Une série d'exemples pas à pas qui vous indiquent comment obtenir un environnement de développement en cours d'exécution.
-
-Dites quelle sera l'étape
-
-
+1. Clonez le projet depuis le référentiel GitHub en utilisant la commande suivante dans votre terminal
 ```
-Répéter des exemple
+git clone https://github.com/xen0r-star/StartProject.git
+```
+<br>
+
+2. Accédez au répertoire du projet en utilisant la commande suivante
+```
+cd StartProject
+```
+<br>
+
+3. Maintenant, vous pouvez exécuter l'application StartProject en utilisant la commande
+```
+python StartProject.py
 ```
 
+## ⛏️ Construit avec <a name = "Technologies"></a>
 
-```
-until finished
-```
+- [Python](https://www.python.org/) - Langage
+- [Tkinter](https://www.python.org/) - Interface graphique
+- [Pystray](https://pystray.readthedocs.io/) - Icône de barre d'état système
+- [Flask](https://flask.palletsprojects.com/) - Framework web
 
+## 🖼️ Source des images <a name = "Image"></a>
+- [Freepik](https://fr.freepik.com/) - Ressources graphiques gratuites.
+- [Flaticon](https://www.flaticon.com/) - Icônes vectorielles gratuites.
+- [Pngtree](https://pngtree.com/freebackground/dark-vector-abstract-background_1159556.html) -  Banque d'images gratuits.
 
-## 🎈 Utilisation <a name="utilisation"></a>
+## 📜 Licence <a name = "Licence"></a>
+Ce projet est sous licence MIT - consultez le fichier [LICENSE.md]() pour plus de détails.
 
-Ajouter des notes sur la façon d'utiliser le système.
+## ✍️ Auteur <a name = "auteur"></a>
 
-## ⛏️ Construit avec <a name = "stack_technologique"></a>
-
-- [MongoDB](https://www.mongodb.com/) - Base de données
-- [Express](https://expressjs.com/) - Framework côté serveur
-- [VueJs](https://vuejs.org/) - Framework Web
-- [NodeJs](https://nodejs.org/en/) - Environnement côté serveur
-
-## ✍️ Auteurs <a name = "auteurs"></a>
-
-- [@kylelobo](https://github.com/kylelobo) - Idée & Travail Initial
-
-Voir également la liste des [contributeurs](https://github.com/kylelobo/The-Documentation-Compendium/contributors)
-ayant participé à ce projet.
-
-## 🎉 Remerciements <a name = "remerciements"></a>
-
-- Un clin d'œil à tous ceux dont le code a été utilisé
-- Inspiration
-- Références
-
-
-
-
-
-
-
-
-
-
-
- <a href='https://pngtree.com/freebackground/dark-vector-abstract-background_1159556.html'>free background photos from pngtree.com/</a>
+- [@xen0r-star](https://github.com/xen0r-star) - Création et développement 

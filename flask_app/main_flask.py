@@ -1,8 +1,10 @@
-from flask import Flask, request, redirect, render_template
+from flask import Flask, request, render_template
+import signal
 import requests
 import os
 import sys
 import logging
+import webbrowser
 
 
 app = Flask(__name__, template_folder='templates/')
@@ -30,6 +32,7 @@ def handle_all_errors(error):
 def index():
     return render_template('login.html', client_id=CLIENT_ID)
 
+access_token = None
 @app.route('/callback')
 def callback():
     code = request.args.get('code')
@@ -42,16 +45,25 @@ def callback():
         }
         response = requests.post('https://github.com/login/oauth/access_token', data=data, headers={'Accept': 'application/json'})
         if response.status_code == 200:
+            global access_token
             access_token = response.json()["access_token"]
             return render_template('success.html')
 
     return 'La connexion a échoué.'
 
-@app.route('/bouton', methods=['POST'])
-def bouton_click():
-    print("Le bouton a été cliqué !")   
-    Flask(__name__).close()
-    return "ok"
+
+@app.route('/open_app', methods=['POST'])
+def open_app():
+    print("open_app")
+    global exit_thread
+    exit_thread = access_token
+
+
+@app.route('/exit', methods=['POST'])
+def exit():
+    print("exit")
+    webbrowser.open("https://xen0r-star.github.io/StartProject/")
+    
 
 
 if __name__ == "__main__":

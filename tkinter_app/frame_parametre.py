@@ -1,9 +1,15 @@
 from tkinter import *
 from PIL import Image, ImageTk
+import threading
+import webbrowser
+import queue
+
 from data_app.data_json import save_data, load_data, load_info
 from tkinter_app.other_module import delete_frame_content
 from utilities import pseudo, content_folder
+import flask_app.main_flask
 
+exit_thread = False  # Variable de contrôle partagée entre les threads
 def Frame_parametre(event, content_frame, label_photo_user, text_label_user_name):
     delete_frame_content(content_frame) 
 
@@ -195,3 +201,30 @@ def Frame_parametre(event, content_frame, label_photo_user, text_label_user_name
                 )
                 other_button.config(image=original_image)
                 other_button.image = original_image
+
+
+    link_github_frame = Frame(content_frame, bg=color_content)
+    link_github_frame.pack(anchor=W, side=TOP)    
+
+    photo_link_github = ImageTk.PhotoImage(
+        image=Image.open("Picture/App/" + icon_type + "/Github_link.png").resize((218, 35), Image.LANCZOS)
+    )
+    button_link_github = Button(link_github_frame, image=photo_link_github, bg=color_content, cursor="hand2", relief="flat", bd=0, highlightthickness=0, highlightbackground="white", activebackground=color_content, activeforeground="#ffffff", compound="left")
+    button_link_github.image = photo_link_github
+    button_link_github.pack(ipadx=2, ipady=2, side=TOP, fill=X, padx=10, pady=2)
+    
+    def link_github(event):
+        print("link github compte")
+        webbrowser.open("http://localhost:5000")
+        thread = threading.Thread(target=run_flask_link)
+        thread.start()
+
+    def run_flask_link():
+        global exit_thread
+        print("lancer ok")
+        while not exit_thread:
+            flask_app.main_flask.app.run(debug=False, use_debugger=False, use_reloader=False)
+            pass
+
+
+    button_link_github.bind("<Button-1>", link_github)

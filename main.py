@@ -191,8 +191,7 @@ button_parametre.bind("<Button-1>", handle_parametre_button_click)
 button_select_project("C")
 
 
-
-icon = main_pystray(win, global_event, content_frame, label_photo_user, text_label_user_name, liste_button)
-win.protocol("WM_DELETE_WINDOW", lambda: closing(icon, win))
+main_pystray(win, global_event, content_frame, label_photo_user, text_label_user_name, liste_button)
+win.protocol("WM_DELETE_WINDOW", lambda: closing())
 
 win.mainloop()

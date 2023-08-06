@@ -25,7 +25,7 @@ def main_pystray(win, event, content_frame, label_photo_user, text_label_user_na
             webbrowser.open("index.html")
             
         elif str(query) == "Exit":
-            closing(icon, win)
+            closing()
 
         elif str(query) == "C":
             win.deiconify()
@@ -97,5 +97,3 @@ def main_pystray(win, event, content_frame, label_photo_user, text_label_user_na
 
     icon = pystray.Icon("GFG", image, "StartProject", menu)
     icon.run_detached()
-
-    return icon
