@@ -16,13 +16,13 @@
 
 ## 📝 Table des matières
 
-- [❓ Explication](#❓-explication)
-- [💡 But](#💡-but)
-- [🏁 Démarrage](#🏁-démarrage)
-- [⛏️ Technologies Utilisées](#⛏️-construit-avec)
-- [🖼️ Image](#🖼️-source-des-images)
-- [📜 Licence](#📜-licence)
-- [✍️ Auteur](#✍️-auteur)
+- [❓ Explication](#Explication)
+- [💡 But](#But)
+- [🏁 Démarrage](#Demarrage)
+- [⛏️ Technologies Utilisées](#Technologies)
+- [🖼️ Image](#Image)
+- [📜 Licence](#Licence)
+- [✍️ Auteur](#Auteur)
 
 ## ❓ Explication <a name = "Explication"></a>
 
@@ -76,8 +76,8 @@ python StartProject.py
 - [Pngtree](https://pngtree.com/freebackground/dark-vector-abstract-background_1159556.html) -  Banque d'images gratuits.
 
 ## 📜 Licence <a name = "Licence"></a>
-Ce projet est sous licence MIT - consultez le fichier [LICENSE.md]() pour plus de détails.
+Ce projet est sous licence CC BY-NC 4.0 - consultez le fichier [LICENSE.md](LICENSE.md) pour plus de détails.
 
-## ✍️ Auteur <a name = "auteur"></a>
+## ✍️ Auteur <a name = "Auteur"></a>
 
 - [@xen0r-star](https://github.com/xen0r-star) - Création et développement 

@@ -10,7 +10,7 @@
     <div class="readme" id="a"></div>
     <button onclick="lumiere()" id="b" style="position: fixed; bottom: 25px; right: 25px;"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M23.923 16.5487C24.0829 16.1758 23.9888 15.7454 23.6867 15.4686C23.3846 15.1917 22.938 15.1266 22.5661 15.3052C21.3101 15.908 19.8961 16.2471 18.3981 16.2471C13.1801 16.2471 8.95016 12.1243 8.95016 7.03849C8.95016 4.97957 9.64225 3.08101 10.8124 1.54797C11.0597 1.22393 11.075 0.784388 10.8508 0.444777C10.6265 0.105167 10.2097 -0.0633335 9.80466 0.0218682C4.2002 1.20079 2.60834e-07 6.05842 0 11.8745C-3.00331e-07 18.5712 5.56986 24 12.4406 24C17.6133 24 22.0464 20.9232 23.923 16.5487Z" fill="#ABAFD1"/></svg></button>
     <script>
-        fetch('https://raw.githubusercontent.com/xen0r-star/StartProject/ac4d4dfa926cf6c9047f0e35c4d80920d617f68f/README.md')
+        fetch('https://raw.githubusercontent.com/xen0r-star/StartProject/main/README.md')
             .then(response => response.text())
             .then(data => {
                 document.getElementById('a').innerHTML = marked.parse(data);
