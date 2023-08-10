@@ -149,9 +149,10 @@ def Frame_parametre(event, content_frame, label_photo_user, text_label_user_name
     Parametre_color1_frame.pack(side=TOP)
     for i in range(1, 6):
         if user_color == i: 
-            photo_color_parametre = ImageTk.PhotoImage(
-                image=Image.open("Picture/App/" + icon_type + "/Color-on" + str(i) + ".png").resize((30, 30), Image.LANCZOS)
-            )
+            Picture1 = Image.open("Picture/App/Color" + str(i) + ".png").resize((30, 30), Image.LANCZOS)
+            Picture2 = Image.open("Picture/App/" + icon_type + "/Color-on.png").resize((30, 30), Image.LANCZOS)
+            Picture1.paste(Picture2, (0, 0), Picture2)
+            photo_color_parametre = ImageTk.PhotoImage(Picture1)
         else:
             photo_color_parametre = ImageTk.PhotoImage(
                 image=Image.open("Picture/App/Color" + str(i) + ".png").resize((30, 30), Image.LANCZOS)
@@ -166,9 +167,10 @@ def Frame_parametre(event, content_frame, label_photo_user, text_label_user_name
     Parametre_color2_frame.pack(side=TOP)
     for i in range(6, 11):
         if user_color == i: 
-            photo_color_parametre = ImageTk.PhotoImage(
-                image=Image.open("Picture/App/" + icon_type + "/Color-on" + str(i) + ".png").resize((30, 30), Image.LANCZOS)
-            )
+            Picture1 = Image.open("Picture/App/Color" + str(i) + ".png").resize((30, 30), Image.LANCZOS)
+            Picture2 = Image.open("Picture/App/" + icon_type + "/Color-on.png").resize((30, 30), Image.LANCZOS)
+            Picture1.paste(Picture2, (0, 0), Picture2)
+            photo_color_parametre = ImageTk.PhotoImage(Picture1)
         else:
             photo_color_parametre = ImageTk.PhotoImage(
                 image=Image.open("Picture/App/Color" + str(i) + ".png").resize((30, 30), Image.LANCZOS)
@@ -188,9 +190,11 @@ def Frame_parametre(event, content_frame, label_photo_user, text_label_user_name
 
         text_label_user_name["fg"] = color_pseudo[user_color-1]
 
-        new_image = ImageTk.PhotoImage(
-            image=Image.open("Picture/App/" + icon_type + "/Color-on" + str(color) + ".png").resize((30, 30), Image.LANCZOS)
-        )
+        Picture1 = Image.open("Picture/App/Color" + str(color) + ".png").resize((30, 30), Image.LANCZOS)
+        Picture2 = Image.open("Picture/App/" + icon_type + "/Color-on.png").resize((30, 30), Image.LANCZOS)
+        Picture1.paste(Picture2, (0, 0), Picture2)
+        new_image = ImageTk.PhotoImage(Picture1)
+
         button.config(image=new_image)
         button.image = new_image
 

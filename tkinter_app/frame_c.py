@@ -10,7 +10,7 @@ def Frame_c(content_frame):
     color_content = info["color_content"]
 
     frame = Frame(content_frame, bg=color_content)
-    frame.pack(side=LEFT, anchor=N, padx=35, pady=20, fill=BOTH)
+    frame.pack(side=LEFT, anchor=N, padx=35, pady=20, fill=BOTH, expand=True)
 
     general_part(frame, "C")
 
