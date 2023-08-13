@@ -2,10 +2,12 @@ from tkinter import *
 from PIL import Image, ImageTk
 import threading
 import webbrowser
+import math
 # import queue
 
 from data_app.data_json import save_data, load_data, load_info
 from tkinter_app.other_module import delete_frame_content
+from tkinter_app.Widgets.CustomPicker import CustomPicker
 from utilities import pseudo, content_folder
 import flask_app.main_flask
 
@@ -21,11 +23,16 @@ def Frame_parametre(event, content_frame, label_photo_user, text_label_user_name
     user_color = data["user_color"]
 
     info = load_info()
+    color_menu = info["color_menu"]
     color_content = info["color_content"]
-    color_pseudo = info["color_pseudo"]
     color_text = info["color_text"]
     color_soustext = info["color_soustext"]
+    color_autretext = info["color_autretext"]
     color_zone = info["color_zone"]
+    color_scroll = info["color_scroll"]
+    color_icon_type = "#ffffff" if info["icon_type"] == "Light" else "#000000"
+
+    color_pseudo = info["color_pseudo"]
 
     icon_type = info["icon_type"]
     p1_pseudo = info["p1_pseudo"]
@@ -172,16 +179,45 @@ def Frame_parametre(event, content_frame, label_photo_user, text_label_user_name
 
 
     # palette de couleur de l'application
-    text_label=Label(content_frame, text="Palette de couleur de l'application", font=("Arial", 17), bg=color_content, fg=color_text)
+    text_label=Label(content_frame, text="Couleur application", font=("Arial", 17), bg=color_content, fg=color_text)
     text_label.pack(side=TOP, anchor=W, padx=30)
 
-    def save_palette(color):
-        print(f"Color palette {color}")
+    square_size = 34
+    canvas = Canvas(content_frame, height=(square_size + 10), bd=0, bg="green", highlightthickness=0)
+    canvas.pack(side=TOP, fill=X, anchor=CENTER, padx=20, pady=5)
 
-    Palette_frame = CustomImageButton(content_frame, color_content, image="Palette", imageOn=f"{icon_type}/Palette-on.png", repeat=[(1, 2), (2, 3), (3, 4)], size=(250, 30), first_img=1, callback=save_palette)
-    Palette_frame.pack(side=TOP, fill=X, anchor=CENTER, padx=40)
-    
+    colors = [color_menu, color_content, color_zone, color_text, color_soustext, color_autretext, color_scroll, color_icon_type]
+    split = [(1,4), (4,7), (7, 9)]
+    split_size = 15
+    padx_size = 5
 
+    for frame_range in split:
+        for i in range(frame_range[0], frame_range[1]):
+            x1 = (i * square_size) + ((i - 1) * padx_size) + (math.floor((i-1) / 3) * split_size)
+            y1 = 5
+            x2 = x1 + square_size
+            y2 = square_size + y1
+            canvas.create_rectangle(x1, y1, x2, y2, fill=colors[i-1], outline=color_icon_type)
+
+    def Frame_colorpicker():
+        win_colorpicker = Tk()
+        win_colorpicker.title("Sélecteur de couleurs")
+        win_colorpicker.iconbitmap("Picture/App/logo.ico")
+        win_colorpicker.geometry("350x600")
+        win_colorpicker.resizable(False, False)
+
+        selected_color_frame = CustomPicker(win_colorpicker)
+        selected_color_frame.pack(fill=BOTH, expand=True)
+
+        win_colorpicker.mainloop()
+
+    photo_palette = ImageTk.PhotoImage(
+        image=Image.open("Picture/App/" + icon_type + "/Palette.png").resize((square_size, square_size), Image.LANCZOS)
+    )
+    button_palette = Button(canvas, image=photo_palette, bg=color_content, cursor="hand2", bd=0, highlightthickness=0, highlightbackground="white", activebackground=color_content, command=Frame_colorpicker)
+    button_palette.image = photo_palette
+    button_palette.pack(ipadx=5)
+    canvas.create_window(((9 * square_size) + (8 * padx_size) + (2 * split_size) + square_size), 23, window=button_palette)
 
 
     # bouton connexion

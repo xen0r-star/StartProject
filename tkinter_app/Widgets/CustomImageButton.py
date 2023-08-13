@@ -32,6 +32,7 @@ class CustomImageButton(Frame):
             image_frame = Frame(self, bg=color_content)
             image_frame.pack(side=TOP, anchor=W)
             for i in range(frame_range[0], frame_range[1]):
+                print
                 if i == first_img: 
                     Picture1 = Image.open("Picture/App/" + str(image) + str(i) + ".png").resize(size, Image.LANCZOS)
                     Picture2 = Image.open("Picture/App/" + str(imageOn)).resize(size, Image.LANCZOS)

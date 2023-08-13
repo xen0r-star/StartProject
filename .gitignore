@@ -1,3 +1,4 @@
 flask_app/errors.log
 data_app/data.json
 ex.py
+__pycache__
