@@ -44,7 +44,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}
         with:
-          tag_name: ${{ steps.calculate_version.outputs.alpha_version }}
+          tag_name: Alpha${{ steps.calculate_version.outputs.alpha_version }}
           release_name: Alpha ${{ steps.calculate_version.outputs.alpha_version }}
           draft: false
           prerelease: false
@@ -53,7 +53,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: executable
-          path: dist/main
+          path: dist/
 
       - name: 📎 Joindre le fichier exécutable à la version
         id: attach_executable
