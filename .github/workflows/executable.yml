@@ -21,6 +21,10 @@ jobs:
       - name: Install Dependencies
         run: |
           pip install -r Library-list.txt
+          
+      - name: Install pyinstaller
+        run: |
+          pip install pyinstaller
 
       - name: Build Executable
         run: |
