@@ -19,7 +19,7 @@
 - [❓ Explication](#Explication)
 - [💡 But](#But)
 - [🏁 Démarrage](#Demarrage)
-- [⛏️ Technologies Utilisées](#Technologies)
+- [⛏️ Bibliothèques Utilisées](#Technologies)
 - [🖼️ Image](#Image)
 - [📜 Licence](#Licence)
 - [✍️ Auteur](#Auteur)
@@ -39,33 +39,51 @@ StartProject est une application puissante et conviviale conçue pour faciliter 
 
 ## 🏁 Démarrage <a name = "Demarrage"></a>
 
-Ces instructions simples vous permettront d'obtenir une copie du projet sur votre machine locale afin de pouvoir l'utiliser
-### Prérequis
+Ces instructions simples vous permettront d'obtenir une copie du projet sur votre machine locale afin de pouvoir l'utiliser.
 
-Vous aurez besoin de [Python 3.11.4](https://www.python.org/) et [Git 2.37.3](https://git-scm.com/) ou d'une version ultérieure installée sur votre système. Assurez-vous de mettre à jour votre installation Python et Git avant de commencer à utiliser l'application.
+> [!IMPORTANT]
+> Vous aurez besoin de [Git 2.37.3](https://git-scm.com/) ou d'une version ultérieure installée sur votre système.
 
 ### Installation
 
-1. Clonez le projet depuis le référentiel GitHub en utilisant la commande suivante dans votre terminal
+1. Clonez le projet depuis le référentiel GitHub en utilisant la commande suivante dans votre terminal :
 ```
 git clone https://github.com/xen0r-star/StartProject.git
 ```
-<br>
 
-2. Accédez au répertoire du projet en utilisant la commande suivante
+2. Accédez au répertoire du projet en utilisant la commande suivante :
 ```
 cd StartProject
 ```
-<br>
 
-3. Maintenant, vous pouvez exécuter l'application StartProject en utilisant la commande
-```
-python StartProject.py
-```
+3. Choisissez l'une des options suivantes en fonction de vos besoins :
 
-## ⛏️ Construit avec <a name = "Technologies"></a>
+- **Exécutable :** Si vous préférez utiliser l'exécutable, accédez au répertoire `executable` et exécutez le fichier `StartProject.exe`.
 
-- [Python](https://www.python.org/) - Langage
+  ```
+  cd executable
+  StartProject.exe
+  ```
+
+- **Installation des Bibliothèques :** Si vous préférez installer les bibliothèques manuellement, suivez ces étapes :
+
+   > [!IMPORTANT]
+   > Vous aurez besoin de [Python 3.11.4](https://www.python.org/) ou d'une version ultérieure installée sur votre système.
+
+  - Installez les bibliothèques requises à partir du fichier `requirements.txt` en utilisant la commande :
+    ```
+    pip install -r Library-list.txt
+    ```
+  - Exécutez l'application StartProject en utilisant la commande :
+    ```
+    python StartProject.py
+    ```
+
+Cela vous permettra de choisir l'option qui vous convient le mieux en fonction de vos préférences et de vos besoins.
+
+
+## ⛏️ Bibliothèques Principales Utilisées <a name = "Technologies"></a>
+
 - [Tkinter](https://www.python.org/) - Interface graphique
 - [Pystray](https://pystray.readthedocs.io/) - Icône de barre d'état système
 - [Flask](https://flask.palletsprojects.com/) - Framework web
