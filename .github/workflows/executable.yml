@@ -62,6 +62,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: dist/main
+          asset_path: dist/main/StartProject   # Chemin complet du fichier exécutable
           asset_name: StartProject
           asset_content_type: application/x-msdownload
+
