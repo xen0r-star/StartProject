@@ -21,22 +21,55 @@ jobs:
       - name: Install Dependencies
         run: |
           pip install -r Library-list.txt
+        run: echo "😀 Toutes les librairies de la liste sont installées."
           
       - name: Install pyinstaller
         run: |
           pip install pyinstaller
+        run: echo "😎 La librairies pyinstaller est installées."
 
       - name: Build Executable
         run: |
-          pyinstaller --onedir main.py
+          pyinstaller --noconfirm --onedir --console --icon "C:/Users/Florian/Desktop/StartProject/Picture/App/logo.ico" "C:/Users/Florian/Desktop/StartProject/main.py"
+        run: echo "🛠️ Construction de l'exécutable fini."
 
-      - name: Move Executable to Executable Folder
-        run: |
-          mkdir -p executable
-          mv dist/main executable/  # Remplacez par le nom de votre exécutable
+      - name: Get Latest Release Tag
+        id: latest_release
+        run: echo "::set-output name=tag::$(git describe --tags --abbrev=0)"
+        run: echo "🏷️ Obtenir la dernière version de l'étiquette"
 
-      - name: Archive Executable Folder
+      - name: Calculate New Alpha Version
+        id: calculate_version
+        run: echo "::set-output name=alpha_version::$(echo ${{ steps.latest_release.outputs.tag }} | cut -d' ' -f2 | awk -F. -v OFS=. '{$NF = $NF + 1;} 1')"
+        run: echo "🔄 Calcul de la nouvelle version Alpha"
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.calculate_version.outputs.alpha_version }}
+          release_name: Alpha ${{ steps.calculate_version.outputs.alpha_version }}
+          draft: false
+          prerelease: false
+        run: echo "🚀 Création d'une version"
+
+      - name: Upload Executable
         uses: actions/upload-artifact@v2
         with:
-          name: executables
-          path: executable
+          name: executable
+          path: dist/main
+        run: echo "📤 Transférer de l'exécutable"
+
+      - name: Attach Executable to Release
+        id: attach_executable
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: dist/main
+          asset_name: StartProject
+          asset_content_type: application/x-msdownload
+        run: echo "📎 Joindre le fichier exécutable à la version"
