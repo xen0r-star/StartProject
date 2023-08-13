@@ -20,7 +20,7 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          pip install -r ../../Library_list.txt
+          pip install -r ../../Library-list.txt
 
       - name: Build Executable
         run: |
