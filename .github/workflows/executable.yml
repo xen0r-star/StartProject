@@ -28,7 +28,7 @@ jobs:
 
       - name: 🛠️ Construction de l'exécutable
         run: |
-          pyinstaller --noconfirm --onedir --console --icon "C:/Users/Florian/Desktop/StartProject/Picture/App/logo.ico" "C:/Users/Florian/Desktop/StartProject/main.py"
+          pyinstaller --noconfirm --onedir --console --icon "Picture/App/logo.ico" "main.py"
 
       - name: 🏷️ Obtenir la dernière version de l'étiquette
         id: latest_release
