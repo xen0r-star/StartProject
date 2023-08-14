@@ -7,62 +7,92 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
-      - name: Checkout Code
+      - name: 📦 Téléchargement du projet
         uses: actions/checkout@v2
 
-      - name: Set Up Python
+      - name: 🪄 Mise en place de Python
         uses: actions/setup-python@v2
         with:
           python-version: 3.11.4
 
-      - name: 😀 Installation des librairies
-        run: |
-          pip install -r Library-list.txt
-
-      - name: 😎 Installation de la librairie pyinstaller 
+      - name: 😀 Installation des librairies pipreqs et pyinstaller 
         run: |
           pip install pyinstaller
+          pip install pipreqs
+
+      - name: 😎 Installation des librairies du projet
+        run: |
+          pipreqs . --force
+          pip install -r requirements.txt
 
       - name: 🛠️ Construction de l'exécutable
-        run: |
-          pyinstaller --noconfirm --onedir --console --icon "Picture/App/logo.ico" "main.py"
+        run: pyinstaller.exe --onedir -n StartProject -w --icon "Picture/App/logo.ico" --add-data "data_app;data_app" --add-data "flask_app;flask_app" --add-data "tkinter_app;tkinter_app" --add-data "Picture;Picture" --add-data "pystray_app;pystray_app" --add-data "utilities.py;." --add-data "index.html;." --add-data "README.md;." --add-data "LICENSE.md;." .\main.py
 
-      - name: 🏷️ Obtenir la dernière version de l'étiquette
-        id: latest_release
-        run: echo "::set-output name=tag::$(git describe --tags --abbrev=0)"
+      # Release
 
-      - name: 🔄 Calcul de la nouvelle version Alpha
-        id: calculate_version
-        run: echo "::set-output name=alpha_version::$(echo ${{ steps.latest_release.outputs.tag }} | cut -d' ' -f2 | awk -F. -v OFS=. '{$NF = $NF + 1;} 1')"
-
-      - name: 🚀 Création d'une version
+      - name: 🚀 Création d'une Release
         id: create_release
         uses: actions/create-release@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}
+          GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }} # This token is provided by Actions, you do not need to create your own token
         with:
-          tag_name: Alpha${{ steps.calculate_version.outputs.alpha_version }}
-          release_name: Alpha ${{ steps.calculate_version.outputs.alpha_version }}
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          body: |
+            Changes in this Release
+            - First Change
+            - Second Change
           draft: false
           prerelease: false
 
-      - name: 📤 Transférer de l'exécutable
-        uses: actions/upload-artifact@v2
-        with:
-          name: executable
-          path: dist/
-
-      - name: 📎 Joindre le fichier exécutable à la version
+      - name: 📎 Joindre le dossier StartProject à la Release
         id: attach_executable
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: dist/main/StartProject   # Chemin complet du fichier exécutable
-          asset_name: StartProject
-          asset_content_type: application/x-msdownload
+          asset_path: dist/StartProject   # Chemin vers le fichier que vous voulez inclure
+          asset_name: StartProject   # Nom que le fichier aura dans la release
+          asset_content_type: application/x-msdownload   # Type de contenu du fichier
 
+      
+
+      # - name: 🏷️ Obtenir la dernière version de l'étiquette
+      #   id: latest_release
+      #   run: echo "::set-output name=tag::$(git describe --tags --abbrev=0)"
+
+      # - name: 🔄 Calcul de la nouvelle version Alpha
+      #   id: calculate_version
+      #   run: echo "::set-output name=alpha_version::$(echo ${{ steps.latest_release.outputs.tag }} | cut -d' ' -f2 | awk -F. -v OFS=. '{$NF = $NF + 1;} 1')"
+
+      # - name: 🚀 Création d'une version
+      #   id: create_release
+      #   uses: actions/create-release@v1
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}
+      #   with:
+      #     tag_name: Alpha${{ steps.calculate_version.outputs.alpha_version }}
+      #     release_name: Alpha ${{ steps.calculate_version.outputs.alpha_version }}
+      #     draft: false
+      #     prerelease: false
+
+      # - name: 📤 Transférer de l'exécutable
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: executable
+      #     path: dist/
+
+      # - name: 📎 Joindre le fichier exécutable à la version
+      #   id: attach_executable
+      #   uses: actions/upload-release-asset@v1
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}
+      #   with:
+      #     upload_url: ${{ steps.create_release.outputs.upload_url }}
+      #     asset_path: dist/main/StartProject   # Chemin complet du fichier exécutable
+      #     asset_name: StartProject
+      #     asset_content_type: application/x-msdownload
