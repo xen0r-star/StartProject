@@ -72,7 +72,7 @@ cd StartProject
 
   - Installez les bibliothèques requises à partir du fichier `requirements.txt` en utilisant la commande :
     ```
-    pip install -r Library-list.txt
+    pip install -r requirements.txt
     ```
   - Exécutez l'application StartProject en utilisant la commande :
     ```

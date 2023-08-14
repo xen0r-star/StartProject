@@ -33,18 +33,31 @@ jobs:
 
       # Release
 
+      - name: 🔄 Nouveau nom de la nouvelle Release
+        id: get_commit_count
+        run: |
+          COMMIT_COUNT=$(git rev-list --count HEAD)
+          echo "::set-output name=commit_count::$COMMIT_COUNT"
+         
+
       - name: 🚀 Création d'une Release
         id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }} # This token is provided by Actions, you do not need to create your own token
         with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
+          tag_name: Alpha
+          release_name: Alpha 0.${{ steps.get_commit_count.outputs.commit_count }}
           body: |
-            Changes in this Release
-            - First Change
-            - Second Change
+            # Version Alpha de StartProject
+
+            Il s'agit d'une version **alpha** du projet StartProject. Bien que ce soit un travail en cours, il représente une version fonctionnelle du projet.
+            Pour plus d'informations et de conseils, veuillez vous référer aux fichiers [README](https://github.com/xen0r-star/StartProject/blob/main/README.md) et [LICENSE](https://github.com/xen0r-star/StartProject/blob/main/LICENSE.md).
+
+            ### Bibliothèques Utilisées :
+            - Vous pouvez trouver la liste des bibliothèques utilisées dans le fichier [Library List](https://github.com/xen0r-star/StartProject/blob/main/requirements.txt).
+
+            N'hésitez pas à explorer et à fournir des retours 👍 
           draft: false
           prerelease: false
 
@@ -79,12 +92,6 @@ jobs:
       #     release_name: Alpha ${{ steps.calculate_version.outputs.alpha_version }}
       #     draft: false
       #     prerelease: false
-
-      # - name: 📤 Transférer de l'exécutable
-      #   uses: actions/upload-artifact@v2
-      #   with:
-      #     name: executable
-      #     path: dist/
 
       # - name: 📎 Joindre le fichier exécutable à la version
       #   id: attach_executable
