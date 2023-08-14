@@ -35,7 +35,7 @@ jobs:
         id: get_commit_count
         run: |
           $env:COMMIT_COUNT = (git rev-list --count HEAD)
-          echo "::set-output name=commit_count::$COMMIT_COUNT"
+          echo "commit_count=$COMMIT_COUNT" >> $GITHUB_OUTPUT
 
       - name: 🚀 Création d'une Release
         id: create_release
@@ -44,7 +44,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}
         with:
           tag_name: Alpha
-          release_name: Alpha 0.${{ steps.get_commit_count.outputs.commit_count }}
+          release_name: "Alpha 0.$COMMIT_COUNT"
           body: |
             # Version Alpha de StartProject
 
@@ -58,6 +58,9 @@ jobs:
           draft: false
           prerelease: false
 
+      - name: 📂 Zipper le dossier StartProject
+        run: Compress-Archive -Path dist/StartProject/* -DestinationPath StartProject.zip
+
       - name: 📌 Joindre le dossier StartProject à la Release
         id: attach_executable
         uses: actions/upload-release-asset@v1
@@ -65,6 +68,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: dist/StartProject
-          asset_name: StartProject
+          asset_path: StartProject.zip
+          asset_name: StartProject - Executable
           asset_content_type: application/x-msdownload
