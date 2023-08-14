@@ -34,8 +34,9 @@ jobs:
       - name: 🔄 Nombre de commits du projet
         id: get_commit_count
         run: |
-          COMMIT_COUNT=$(git rev-list --count HEAD)
+          COMMIT_COUNT=$(bash -c "git rev-list --count HEAD")
           echo "CommitCount=$COMMIT_COUNT" >> $GITHUB_ENV
+
 
       - name: 🚀 Création d'une Release
         id: create_release
