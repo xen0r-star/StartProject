@@ -31,6 +31,9 @@ jobs:
       - name: 🛠️ Construction de l'exécutable
         run: pyinstaller.exe --onedir -n StartProject -w --icon "Picture/App/logo.ico" --add-data "data_app;data_app" --add-data "flask_app;flask_app" --add-data "tkinter_app;tkinter_app" --add-data "Picture;Picture" --add-data "pystray_app;pystray_app" --add-data "utilities.py;." --add-data "index.html;." --add-data "README.md;." --add-data "LICENSE.md;." .\main.py
 
+      - name: 📂 Zipper le dossier StartProject
+        run: Compress-Archive -Path dist/StartProject/* -DestinationPath StartProject.zip
+
       - name: 🔄 Nombre de commits du projet
         id: get_commit_count
         run: |
@@ -44,9 +47,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}
         with:
           tag_name: Alpha
-          release_name: "Alpha 0.$COMMIT_COUNT"
+          release_name: Alpha 0.${{ steps.get_commit_count.outputs.commit_count }}
           body: |
-            # Version Alpha de StartProject
+            # Version Alpha 0.${{ steps.get_commit_count.outputs.commit_count }} de StartProject
 
             Il s'agit d'une version **alpha** du projet StartProject. Bien que ce soit un travail en cours, il représente une version fonctionnelle du projet.
             Pour plus d'informations et de conseils, veuillez vous référer aux fichiers [README](https://github.com/xen0r-star/StartProject/blob/main/README.md) et [LICENSE](https://github.com/xen0r-star/StartProject/blob/main/LICENSE.md).
@@ -57,9 +60,6 @@ jobs:
             N'hésitez pas à explorer et à fournir des retours 👍 
           draft: false
           prerelease: false
-
-      - name: 📂 Zipper le dossier StartProject
-        run: Compress-Archive -Path dist/StartProject/* -DestinationPath StartProject.zip
 
       - name: 📌 Joindre le dossier StartProject à la Release
         id: attach_executable
