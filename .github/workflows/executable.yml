@@ -46,7 +46,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}
         with:
-          tag_name: Alpha
+          tag_name: "Alpha-0.${{ steps.get_commit_count.outputs.commit_count }}"
           release_name: "Alpha 0.${{ steps.get_commit_count.outputs.commit_count }}"
           body: |
             # Version Alpha 0.${{ steps.get_commit_count.outputs.commit_count }} de StartProject
