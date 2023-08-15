@@ -29,7 +29,7 @@ jobs:
           pip install -r requirements.txt
 
       - name: 🛠️ Construction de l'exécutable
-        run: pyinstaller.exe --onedir -n StartProject -w --icon "Picture/App/logo.ico" --add-data "data_app;data_app" --add-data "flask_app;flask_app" --add-data "tkinter_app;tkinter_app" --add-data "Picture;Picture" --add-data "pystray_app;pystray_app" --add-data "utilities.py;." --add-data "index.html;." --add-data "README.md;." --add-data "LICENSE.md;." .\main.py
+        run: pyinstaller --onedir -n StartProject -w --icon "Picture/App/logo.ico" --add-data "data_app:data_app" --add-data "flask_app:flask_app" --add-data "tkinter_app:tkinter_app" --add-data "Picture:Picture" --add-data "pystray_app:pystray_app" --add-data "utilities.py:." --add-data "index.html:." --add-data "README.md:." --add-data "LICENSE.md:." ./main.py
         
       - name: 📂 Zipper le dossier StartProject
         run: zip -r StartProject.zip dist/StartProject/*
