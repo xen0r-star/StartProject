@@ -11,7 +11,9 @@ jobs:
 
     steps:
       - name: 📦 Téléchargement du projet
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
       - name: 🪄 Mise en place de Python
         uses: actions/setup-python@v2
@@ -33,24 +35,22 @@ jobs:
         
       - name: 📂 Zipper le dossier StartProject
         run: zip -r StartProject.zip dist/StartProject/*
-        
-      - name: 📃 Liste des bibliothèques utilisées
-        id: format_libraries
-        run: |
-          # Ouvrir le fichier requirements.txt
-          formatted_libs=""
-          cat requirements.txt | while read line; do
-            library=$(echo $line | cut -d'=' -f1)
-            version=$(echo $line | cut -d'=' -f2)
-            formatted_libs="$formatted_libs - $library - _$version_"$'\n'
-          done
-          echo "formatted_libs=$formatted_libs" >> "$GITHUB_ENV"
 
       - name: 🔄 Nombre de commits du projet
         id: get_commit_count
         run: |
           COMMIT_COUNT=$(git rev-list --count HEAD)
-          echo "COMMIT_NUMBER=$COMMIT_COUNT" >> "$GITHUB_ENV"
+          echo "::set-output name=commit_count::$COMMIT_COUNT"
+
+      - name: 📃 Liste des bibliothèques utilisées
+        id: format_libraries
+        run: |
+          cat requirements.txt | while read line; do
+            library=$(echo $line | cut -d'=' -f1)
+            version=$(echo $line | cut -d'=' -f2)
+            formatted_libs="$formatted_libs - $library - _$version_"$'\n'
+          done
+          echo "::set-output name=formatted_libs::$formatted_libs"
 
       - name: 🚀 Création d'une Release
         id: create_release
@@ -58,17 +58,17 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}
         with:
-          tag_name: "Alpha-0.${{ steps.get_commit_count.outputs.COMMIT_NUMBER }}"
-          release_name: "Alpha 0.${{ steps.get_commit_count.outputs.COMMIT_NUMBER }}"
+          tag_name: "Alpha-0.${{ steps.get_commit_count.outputs.commit_count }}"
+          release_name: "Alpha 0.${{ steps.get_commit_count.outputs.commit_count }}"
           body: |
-            # Version Alpha 0.${{ steps.get_commit_count.outputs.COMMIT_NUMBER }} de StartProject
+            # Version Alpha 0.${{ steps.get_commit_count.outputs.commit_count }} de StartProject
 
             Il s'agit d'une version **alpha** du projet StartProject. Bien que ce soit un travail en cours, il représente une version fonctionnelle du projet.
             Pour plus d'informations et de conseils, veuillez vous référer aux fichiers [README](https://github.com/xen0r-star/StartProject/blob/main/README.md) et [LICENSE](https://github.com/xen0r-star/StartProject/blob/main/LICENSE.md).
 
             ### Bibliothèques Utilisées :
-            ${{ env.formatted_libs }}
-
+            ${{ steps.format_libraries.outputs.formatted_libs }}
+            
             N'hésitez pas à explorer et à fournir des retours 👍 
           draft: false
           prerelease: false
