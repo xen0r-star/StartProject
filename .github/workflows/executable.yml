@@ -6,8 +6,8 @@ on:
       - main
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  build-executable:
+    runs-on: windows-latest
 
     steps:
       - name: 📦 Téléchargement du projet
@@ -35,6 +35,25 @@ jobs:
         
       - name: 📂 Zipper le dossier StartProject
         run: zip -r StartProject.zip dist/StartProject/*
+
+      - name: 📤 Transférer des fichiers
+        uses: actions/upload-artifact@v2
+        with:
+          name: executable-startproject
+          path: |
+            StartProject.zip
+            requirements.txt
+
+
+  send-release:
+    needs: build-executable
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Télécharger des fichiers
+        uses: actions/download-artifact@v2
+        with:
+          name: executable-startproject
 
       - name: 🔄 Nombre de commits du projet
         id: get_commit_count
@@ -83,3 +102,8 @@ jobs:
           asset_path: StartProject.zip
           asset_name: StartProject.zip
           asset_content_type: application/zip
+
+      - name: 🧹 Supprimer les artefacts
+        run: |
+          rm StartProject.zip
+          rm requirements.txt
