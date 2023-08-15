@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     steps:
       - name: 📦 Téléchargement du projet
@@ -29,16 +29,16 @@ jobs:
           pip install -r requirements.txt
 
       - name: 🛠️ Construction de l'exécutable
-        run: pyinstaller.exe --onedir -n StartProject -w --icon "Picture/App/logo.ico" --add-data "data_app;data_app" --add-data "flask_app;flask_app" --add-data "tkinter_app;tkinter_app" --add-data "Picture;Picture" --add-data "pystray_app;pystray_app" --add-data "utilities.py;." --add-data "index.html;." --add-data "README.md;." --add-data "LICENSE.md;." .\main.py
+        run: pyinstaller --onedir -n StartProject -w --icon "Picture/App/logo.ico" --add-data "data_app;data_app" --add-data "flask_app;flask_app" --add-data "tkinter_app;tkinter_app" --add-data "Picture;Picture" --add-data "pystray_app;pystray_app" --add-data "utilities.py;." --add-data "index.html;." --add-data "README.md;." --add-data "LICENSE.md;." ./main.py
 
       - name: 📂 Zipper le dossier StartProject
-        run: Compress-Archive -Path dist/StartProject/* -DestinationPath StartProject.zip
+        run: zip -r StartProject.zip dist/StartProject/*
 
       - name: 🔄 Nombre de commits du projet
         id: get_commit_count
         run: |
-          $env:COMMIT_COUNT = (git rev-list --count HEAD)
-          echo "commit_count=$COMMIT_COUNT" >> $GITHUB_OUTPUT
+          COMMIT_COUNT=$(git rev-list --count HEAD)
+          echo "::set-output name=commit_count::$COMMIT_COUNT"
 
       - name: 🚀 Création d'une Release
         id: create_release
@@ -47,7 +47,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}
         with:
           tag_name: Alpha
-          release_name: Alpha 0.${{ env.COMMIT_COUNT }}
+          release_name: "Alpha 0.${{ steps.get_commit_count.outputs.commit_count }}"
           body: |
             # Version Alpha 0.${{ steps.get_commit_count.outputs.commit_count }} de StartProject
 
@@ -61,13 +61,13 @@ jobs:
           draft: false
           prerelease: false
 
-      - name: 📌 Joindre le dossier StartProject à la Release
-        id: attach_executable
+      - name: 📌 Joindre le fichier zip à la Release
+        id: attach_zip
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: StartProject.zip
-          asset_name: StartProject - Executable
-          asset_content_type: application/x-msdownload
+          asset_name: StartProject.zip
+          asset_content_type: application/zip
