@@ -34,7 +34,9 @@ jobs:
         run: pyinstaller --onedir -n StartProject -w --icon "Picture/App/logo.ico" --add-data "data_app;data_app" --add-data "flask_app;flask_app" --add-data "tkinter_app;tkinter_app" --add-data "Picture;Picture" --add-data "pystray_app;pystray_app" --add-data "utilities.py;." --add-data "index.html;." --add-data "README.md;." --add-data "LICENSE.md;." ./main.py
         
       - name: 📂 Zipper le dossier StartProject
-        run: 7z a -r StartProject.zip dist/StartProject/*
+        run: |
+          cd dist
+          7z a -r StartProject.zip StartProject/*
 
       - name: 📤 Transférer des fichiers
         uses: actions/upload-artifact@v2
@@ -69,11 +71,11 @@ jobs:
       - name: 📃 Liste des bibliothèques utilisées
         id: format_libraries
         run: |
-          cat requirements.txt | while read line; do
-            library=$(echo $line | cut -d'=' -f1)
-            version=$(echo $line | cut -d'=' -f2)
-            formatted_libs="$formatted_libs - $library - _$version_"$'\n'
-          done
+          formatted_libs=""
+          while IFS='==' read -r library version; do
+              formatted_libs+=" - $library - _$version"$'\n'
+          done < requirements.txt
+          export formatted_libs
           echo "::set-output name=formatted_libs::$formatted_libs"
 
       - name: 🚀 Création d'une Release
