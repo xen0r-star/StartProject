@@ -33,22 +33,24 @@ jobs:
         
       - name: 📂 Zipper le dossier StartProject
         run: zip -r StartProject.zip dist/StartProject/*
-
-      - name: 🔄 Nombre de commits du projet
-        id: get_commit_count
-        run: |
-          COMMIT_COUNT=$(git rev-list --count HEAD)
-          echo "::set-output name=commit_count::$COMMIT_COUNT"
-
+        
       - name: 📃 Liste des bibliothèques utilisées
         id: format_libraries
         run: |
+          # Ouvrir le fichier requirements.txt
+          formatted_libs=""
           cat requirements.txt | while read line; do
             library=$(echo $line | cut -d'=' -f1)
             version=$(echo $line | cut -d'=' -f2)
             formatted_libs="$formatted_libs - $library - _$version_"$'\n'
           done
-          echo "::set-output name=formatted_libs::$formatted_libs"
+          echo "formatted_libs=$formatted_libs" >> "$GITHUB_ENV"
+
+      - name: 🔄 Nombre de commits du projet
+        id: get_commit_count
+        run: |
+          COMMIT_COUNT=$(git rev-list --count HEAD)
+          echo "commit_count=$COMMIT_COUNT" >> "$GITHUB_ENV"
 
       - name: 🚀 Création d'une Release
         id: create_release
@@ -65,8 +67,8 @@ jobs:
             Pour plus d'informations et de conseils, veuillez vous référer aux fichiers [README](https://github.com/xen0r-star/StartProject/blob/main/README.md) et [LICENSE](https://github.com/xen0r-star/StartProject/blob/main/LICENSE.md).
 
             ### Bibliothèques Utilisées :
-            ${{ steps.format_libraries.outputs.formatted_libs }}
-            
+            ${{ env.formatted_libs }}
+
             N'hésitez pas à explorer et à fournir des retours 👍 
           draft: false
           prerelease: false
