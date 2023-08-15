@@ -50,7 +50,7 @@ jobs:
         id: get_commit_count
         run: |
           COMMIT_COUNT=$(git rev-list --count HEAD)
-          echo "commit_count=$COMMIT_COUNT" >> "$GITHUB_ENV"
+          echo "COMMIT_NUMBER=$COMMIT_COUNT" >> "$GITHUB_ENV"
 
       - name: 🚀 Création d'une Release
         id: create_release
@@ -58,10 +58,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}
         with:
-          tag_name: "Alpha-0.${{ steps.get_commit_count.outputs.commit_count }}"
-          release_name: "Alpha 0.${{ steps.get_commit_count.outputs.commit_count }}"
+          tag_name: "Alpha-0.${{ steps.get_commit_count.outputs.COMMIT_NUMBER }}"
+          release_name: "Alpha 0.${{ steps.get_commit_count.outputs.COMMIT_NUMBER }}"
           body: |
-            # Version Alpha 0.${{ steps.get_commit_count.outputs.commit_count }} de StartProject
+            # Version Alpha 0.${{ steps.get_commit_count.outputs.COMMIT_NUMBER }} de StartProject
 
             Il s'agit d'une version **alpha** du projet StartProject. Bien que ce soit un travail en cours, il représente une version fonctionnelle du projet.
             Pour plus d'informations et de conseils, veuillez vous référer aux fichiers [README](https://github.com/xen0r-star/StartProject/blob/main/README.md) et [LICENSE](https://github.com/xen0r-star/StartProject/blob/main/LICENSE.md).
