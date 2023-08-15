@@ -40,6 +40,16 @@ jobs:
           COMMIT_COUNT=$(git rev-list --count HEAD)
           echo "::set-output name=commit_count::$COMMIT_COUNT"
 
+      - name: 📃 Liste des bibliothèques utilisées
+        id: format_libraries
+        run: |
+          cat requirements.txt | while read line; do
+            library=$(echo $line | cut -d'=' -f1)
+            version=$(echo $line | cut -d'=' -f2)
+            formatted_libs="$formatted_libs - $library - _$version_"$'\n'
+          done
+          echo "::set-output name=formatted_libs::$formatted_libs"
+
       - name: 🚀 Création d'une Release
         id: create_release
         uses: actions/create-release@v1
@@ -55,8 +65,8 @@ jobs:
             Pour plus d'informations et de conseils, veuillez vous référer aux fichiers [README](https://github.com/xen0r-star/StartProject/blob/main/README.md) et [LICENSE](https://github.com/xen0r-star/StartProject/blob/main/LICENSE.md).
 
             ### Bibliothèques Utilisées :
-            - Vous pouvez trouver la liste des bibliothèques utilisées dans le fichier [Library List](https://github.com/xen0r-star/StartProject/blob/main/requirements.txt).
-
+            ${{ steps.format_libraries.outputs.formatted_libs }}
+            
             N'hésitez pas à explorer et à fournir des retours 👍 
           draft: false
           prerelease: false
