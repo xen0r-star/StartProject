@@ -1,4 +1,4 @@
-name: Build Executable
+name: Executable - Release
 
 on:
   push:
@@ -37,6 +37,7 @@ jobs:
         run: |
           cd dist
           7z a -r StartProject.zip StartProject/*
+          move StartProject.zip ../
 
       - name: 📤 Transférer des fichiers
         uses: actions/upload-artifact@v2
@@ -66,14 +67,15 @@ jobs:
         id: get_commit_count
         run: |
           COMMIT_COUNT=$(git rev-list --count HEAD)
-          echo "::set-output name=commit_count::$COMMIT_COUNT"
+          FORMATTED_COMMIT_COUNT=$(expr $COMMIT_COUNT / 10).$(expr $COMMIT_COUNT % 10)
+          echo "::set-output name=commit_count::$FORMATTED_COMMIT_COUNT"
 
       - name: 📃 Liste des bibliothèques utilisées
         id: format_libraries
         run: |
           formatted_libs=""
           while IFS='==' read -r library version; do
-              formatted_libs+=" - $library - _$version"$'\n'
+              formatted_libs+=" - $library - _$version'_\n"
           done < requirements.txt
           export formatted_libs
           echo "::set-output name=formatted_libs::$formatted_libs"
