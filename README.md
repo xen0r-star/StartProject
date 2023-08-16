@@ -28,6 +28,7 @@
 
 StartProject est une application puissante et conviviale conçue pour faciliter la création de projets et la modifications de projet. Cette application simplifiera le processus de mise en place de vos projets et vous fera gagner un temps précieux.
 
+
 ## 💡 But <a name = "But"></a>
 
 1. Création de projet facile : Notre application vous permettra de créer rapidement un nouveau projet en remplissant simplement quelques informations essentielles.
@@ -39,47 +40,44 @@ StartProject est une application puissante et conviviale conçue pour faciliter 
 
 ## 🏁 Démarrage <a name = "Demarrage"></a>
 
-Ces instructions simples vous permettront d'obtenir une copie du projet sur votre machine locale afin de pouvoir l'utiliser.
-
-> [!IMPORTANT]
-> Vous aurez besoin de [Git 2.37.3](https://git-scm.com/) ou d'une version ultérieure installée sur votre système.
+Ces instructions simples vous permettront d'obtenir un exécutable ou une copie du projet sur votre machine locale afin de pouvoir utiliser StartProject.
 
 ### Installation
 
-1. Clonez le projet depuis le référentiel GitHub en utilisant la commande suivante dans votre terminal :
-```
-git clone https://github.com/xen0r-star/StartProject.git
-```
+Choisissez l'une des options suivantes en fonction de vos besoins :
 
-2. Accédez au répertoire du projet en utilisant la commande suivante :
-```
-cd StartProject
-```
+- **Exécutable :**
+  1. Téléchargez la dernière version du projet depuis la [dernière release](https://github.com/xen0r-star/StartProject/releases).
 
-3. Choisissez l'une des options suivantes en fonction de vos besoins :
+  2. Une fois le téléchargement terminé, décompressez le dossier téléchargé.
 
-- **Exécutable :** Si vous préférez utiliser l'exécutable, accédez au répertoire `executable` et exécutez le fichier `StartProject.exe`.
+  3. Lancez `StartProject.exe` à partir du dossier décompressé.
 
-  ```
-  cd executable
-  StartProject.exe
-  ```
+</br>
 
-- **Installation des Bibliothèques :** Si vous préférez installer les bibliothèques manuellement, suivez ces étapes :
+- **Installation des Bibliothèques manuellement :**
 
-   > [!IMPORTANT]
-   > Vous aurez besoin de [Python 3.11.4](https://www.python.org/) ou d'une version ultérieure installée sur votre système.
+  > [!IMPORTANT]
+  > Vous aurez besoin de [Python 3.11.4](https://www.python.org/) et [Git 2.37.3](https://git-scm.com/) ou d'une version ultérieure installée sur votre système.
 
-  - Installez les bibliothèques requises à partir du fichier `requirements.txt` en utilisant la commande :
+  1. Clonez le projet depuis le référentiel GitHub en utilisant la commande suivante dans votre terminal :
+    ```
+    git clone https://github.com/xen0r-star/StartProject.git
+    ```
+
+  2. Accédez au répertoire du projet en utilisant la commande suivante :
+    ```
+    cd StartProject
+    ```
+  3. Installez les bibliothèques requises à partir du fichier `requirements.txt` en utilisant la commande :
     ```
     pip install -r requirements.txt
     ```
-  - Exécutez l'application StartProject en utilisant la commande :
+  4. Exécutez l'application StartProject en utilisant la commande :
     ```
     python StartProject.py
     ```
-
-Cela vous permettra de choisir l'option qui vous convient le mieux en fonction de vos préférences et de vos besoins.
+<br>
 
 
 ## ⛏️ Bibliothèques Principales Utilisées <a name = "Technologies"></a>

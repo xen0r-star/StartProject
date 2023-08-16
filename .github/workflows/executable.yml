@@ -72,13 +72,7 @@ jobs:
 
       - name: 📃 Liste des bibliothèques utilisées
         id: format_libraries
-        run: |
-          formatted_libs=""
-          while IFS='==' read -r library version; do
-              formatted_libs+=" - $library - _$version'_\n"
-          done < requirements.txt
-          export formatted_libs
-          echo "::set-output name=formatted_libs::$formatted_libs"
+        run: sed -i -E 's/(.*)==([0-9.]*)/- \1 - _\2_/' requirements.txt
 
       - name: 🚀 Création d'une Release
         id: create_release
@@ -95,7 +89,7 @@ jobs:
             Pour plus d'informations et de conseils, veuillez vous référer aux fichiers [README](https://github.com/xen0r-star/StartProject/blob/main/README.md) et [LICENSE](https://github.com/xen0r-star/StartProject/blob/main/LICENSE.md).
 
             ### Bibliothèques Utilisées :
-            ${{ steps.format_libraries.outputs.formatted_libs }}
+            $(cat requirements.txt)
             
             N'hésitez pas à explorer et à fournir des retours 👍 
           draft: false
