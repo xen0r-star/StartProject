@@ -151,7 +151,7 @@ jobs:
           prerelease: false
 
       - name: 1️⃣ Joindre l'executable windows à la Release
-        id: attach_zip
+        id: attach_zip_1
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}
@@ -162,7 +162,7 @@ jobs:
           asset_content_type: application/zip
 
       - name: 2️⃣ Joindre l'executable linux à la Release
-        id: attach_zip
+        id: attach_zip_2
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}
