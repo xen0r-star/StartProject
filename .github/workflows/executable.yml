@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  build-executable:
+  build-executable-windows:
     runs-on: windows-latest
 
     steps:
@@ -20,7 +20,7 @@ jobs:
         with:
           python-version: 3.11.4
 
-      - name: 😀 Installation des librairies pipreqs et pyinstaller 
+      - name: 😀 Installation des librairies pyinstaller et pipreqs
         run: |
           pip install pyinstaller
           pip install pipreqs
@@ -30,26 +30,24 @@ jobs:
           pipreqs . --force
           pip install -r requirements.txt
 
-      - name: 🛠️ Construction de l'exécutable
+      - name: 🛠️ Construction de l'exécutable windows
         run: pyinstaller --onedir -n StartProject -w --icon "Picture/App/logo.ico" --add-data "data_app;data_app" --add-data "flask_app;flask_app" --add-data "tkinter_app;tkinter_app" --add-data "Picture;Picture" --add-data "pystray_app;pystray_app" --add-data "utilities.py;." --add-data "index.html;." --add-data "README.md;." --add-data "LICENSE.md;." ./main.py
         
-      - name: 📂 Zipper le dossier StartProject
+      - name: 📂 Zipper le dossier StartProject - windows
         run: |
           cd dist
-          7z a -r StartProject.zip StartProject/*
-          move StartProject.zip ../
+          7z a -r StartProject-windows.zip StartProject/*
+          move StartProject-windows.zip ../
 
-      - name: 📤 Transférer des fichiers
+      - name: 📤 Transférer de l'executable windows
         uses: actions/upload-artifact@v2
         with:
           name: executable-startproject
-          path: |
-            StartProject.zip
-            requirements.txt
+          path: StartProject-windows.zip
 
 
-  send-release:
-    needs: build-executable
+  build-executable-linux:
+    needs: build-executable-windows
     runs-on: ubuntu-latest
 
     steps:
@@ -58,7 +56,53 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: 📥 Télécharger des fichiers
+      - name: 🪄 Mise en place de Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.11.4
+
+      - name: 😀 Installation des librairies pyinstaller et pipreqs
+        run: |
+          pip install pyinstaller
+          pip install pipreqs
+
+      - name: 😎 Installation des librairies du projet
+        run: |
+          pipreqs . --force
+          pip install -r requirements.txt
+
+      - name: 🛠️ Construction de l'exécutable linux
+        run: pyinstaller --onedir -n StartProject -w --icon "Picture/App/logo.ico" --add-data "data_app;data_app" --add-data "flask_app;flask_app" --add-data "tkinter_app;tkinter_app" --add-data "Picture;Picture" --add-data "pystray_app;pystray_app" --add-data "utilities.py;." --add-data "index.html;." --add-data "README.md;." --add-data "LICENSE.md;." ./main.py
+      
+      - name: 📂 Zipper le dossier StartProject - linux
+        run: |
+          cd dist
+          zip -r StartProject-linux.zip StartProject/*
+          mv StartProject-linux.zip ../
+
+      - name: 📤 Transférer de l'executable linux
+        uses: actions/upload-artifact@v2
+        with:
+          name: executable-startproject
+          path: StartProject-linux.zip
+  
+
+  send-release:
+    needs: build-executable-linux
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📦 Téléchargement du projet
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: 🪄 Mise en place de Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.11.4
+
+      - name: 📥 Télécharger des executables
         uses: actions/download-artifact@v2
         with:
           name: executable-startproject
@@ -68,14 +112,21 @@ jobs:
         run: |
           COMMIT_COUNT=$(git rev-list --count HEAD)
           FORMATTED_COMMIT_COUNT=$(expr $COMMIT_COUNT / 10).$(expr $COMMIT_COUNT % 10)
-          echo "::set-output name=commit_count::$FORMATTED_COMMIT_COUNT"
+          echo "commit_count=$FORMATTED_COMMIT_COUNT" >> $GITHUB_OUTPUT
 
       - name: 📃 Liste des bibliothèques utilisées
         id: format_libraries
         run: |
+          pip install pipreqs
+          pipreqs . --force
           sed -i -E 's/(.*)==([0-9.]*)/- \1 - _\2_/' requirements.txt
-          file_value=$(cat requirements.txt)
-          echo "::set-output name=file_value::$file_value"
+          file_value=$(cat requirements.txt) 
+
+          echo "file_value=$file_value" >> $GITHUB_OUTPUT
+
+          echo "file_value_var<<EOF" >> $GITHUB_ENV
+          echo $file_value >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
 
       - name: 🚀 Création d'une Release
         id: create_release
@@ -92,24 +143,31 @@ jobs:
             Pour plus d'informations et de conseils, veuillez vous référer aux fichiers [README](https://github.com/xen0r-star/StartProject/blob/main/README.md) et [LICENSE](https://github.com/xen0r-star/StartProject/blob/main/LICENSE.md).
 
             ### Bibliothèques Utilisées :
-            ${{ steps.format_libraries.outputs.file_value }}
+            ${{ steps.format_libraries.outputs.file_value_var }}
             
+            ---
             N'hésitez pas à explorer et à fournir des retours 👍 
           draft: false
           prerelease: false
 
-      - name: 📌 Joindre le fichier zip à la Release
+      - name: 1️⃣ Joindre l'executable windows à la Release
         id: attach_zip
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: StartProject.zip
-          asset_name: StartProject.zip
+          asset_path: StartProject-windows.zip
+          asset_name: StartProject - windows
           asset_content_type: application/zip
 
-      - name: 🧹 Supprimer les artefacts
-        run: |
-          rm StartProject.zip
-          rm requirements.txt
+      - name: 2️⃣ Joindre l'executable linux à la Release
+        id: attach_zip
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: StartProject-linux.zip
+          asset_name: StartProject - linux
+          asset_content_type: application/zip
