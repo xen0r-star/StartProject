@@ -44,7 +44,6 @@ jobs:
 
 
   build-executable-linux:
-    needs: build-executable-windows
     runs-on: ubuntu-latest
 
     steps:
@@ -94,7 +93,7 @@ jobs:
           python-version: 3.11.4
 
       - name: 📥 Télécharger des executables
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v2.1.1
         with:
           name: executable-startproject
 
@@ -110,7 +109,7 @@ jobs:
         run: |
           pip install pipreqs
           pipreqs . --force
-          sed -i -E 's/(.*)==([0-9.]*)/- \1 - _\2_/' requirements.txt
+          sed -i -E 's/(.*)==([0-9.]*)/- \1 - (_\2_), /' requirements.txt
           file_value=$(cat requirements.txt) 
 
           echo "file_value_var<<EOF" >> $GITHUB_OUTPUT
@@ -137,6 +136,5 @@ jobs:
             ---
             N'hésitez pas à explorer et à fournir des retours 👍 
           artifacts: 'StartProject-linux.zip,StartProject-windows.zip'
-          
           draft: false
           prerelease: false
