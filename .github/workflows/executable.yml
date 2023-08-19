@@ -72,7 +72,10 @@ jobs:
 
       - name: 📃 Liste des bibliothèques utilisées
         id: format_libraries
-        run: sed -i -E 's/(.*)==([0-9.]*)/- \1 - _\2_/' requirements.txt
+        run: |
+          sed -i -E 's/(.*)==([0-9.]*)/- \1 - _\2_/' requirements.txt
+          file_value=$(cat requirements.txt)
+          echo "::set-output name=file_value::$file_value"
 
       - name: 🚀 Création d'une Release
         id: create_release
@@ -89,7 +92,7 @@ jobs:
             Pour plus d'informations et de conseils, veuillez vous référer aux fichiers [README](https://github.com/xen0r-star/StartProject/blob/main/README.md) et [LICENSE](https://github.com/xen0r-star/StartProject/blob/main/LICENSE.md).
 
             ### Bibliothèques Utilisées :
-            ${{ cat requirements.txt }}
+            ${{ steps.format_libraries.outputs.file_value }}
             
             N'hésitez pas à explorer et à fournir des retours 👍 
           draft: false
