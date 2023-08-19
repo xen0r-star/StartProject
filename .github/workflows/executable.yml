@@ -10,13 +10,10 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      - name: 📦 Téléchargement du projet
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-
-      - name: 🪄 Mise en place de Python
-        uses: actions/setup-python@v4
+      - uses: actions/setup-python@v4
         with:
           python-version: 3.11.4
 
@@ -51,13 +48,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 📦 Téléchargement du projet
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-
-      - name: 🪄 Mise en place de Python
-        uses: actions/setup-python@v4
+      - uses: actions/setup-python@v4
         with:
           python-version: 3.11.4
 
@@ -92,20 +86,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 📦 Téléchargement du projet
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
+      - uses: actions/setup-python@v4
+        with:
+          python-version: 3.11.4
 
       - name: 📥 Télécharger des executables
         uses: actions/download-artifact@v2
         with:
           name: executable-startproject
-
-      - name: 🪄 Mise en place de Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: 3.11.4
 
       - name: 🔄 Nombre de commits du projet
         id: get_commit_count
@@ -126,14 +117,14 @@ jobs:
           echo $file_value >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
-      - name: 🚀 Création d'une Release
+      - name: 🚀 Création de la Release
         id: create_release
-        uses: softprops/action-gh-release
-        env:
-          GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}
+        uses: ncipollo/release-action@v1.12.0
         with:
-          tag_name: "Alpha-0.${{ steps.get_commit_count.outputs.commit_count }}"
-          release_name: "Alpha 0.${{ steps.get_commit_count.outputs.commit_count }}"
+          token: ${{ secrets.TOKEN_GITHUB }}
+
+          tag: "Alpha-0.${{ steps.get_commit_count.outputs.commit_count }}"
+          name: "Alpha 0.${{ steps.get_commit_count.outputs.commit_count }}"
           body: |
             # Version Alpha 0.${{ steps.get_commit_count.outputs.commit_count }} de StartProject
 
@@ -145,27 +136,7 @@ jobs:
             
             ---
             N'hésitez pas à explorer et à fournir des retours 👍 
+          artifacts: 'StartProject-linux.zip,StartProject-windows.zip'
+          
           draft: false
           prerelease: false
-
-      - name: 📌 Joindre l'executable linux à la Release
-        id: attach_zip_1
-        uses: softprops/action-gh-release
-        env:
-          GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: StartProject-linux.zip
-          asset_name: StartProject-linux
-          asset_content_type: application/zip
-
-      - name: 📌 Joindre l'executable windows à la Release
-        id: attach_zip_2
-        uses: softprops/action-gh-release
-        env:
-          GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: StartProject-windows.zip
-          asset_name: StartProject-windows
-          asset_content_type: application/zip
