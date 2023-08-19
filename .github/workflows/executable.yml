@@ -89,7 +89,7 @@ jobs:
             Pour plus d'informations et de conseils, veuillez vous référer aux fichiers [README](https://github.com/xen0r-star/StartProject/blob/main/README.md) et [LICENSE](https://github.com/xen0r-star/StartProject/blob/main/LICENSE.md).
 
             ### Bibliothèques Utilisées :
-            $(cat requirements.txt)
+            ${{ cat requirements.txt }}
             
             N'hésitez pas à explorer et à fournir des retours 👍 
           draft: false
