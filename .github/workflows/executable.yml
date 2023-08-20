@@ -6,8 +6,8 @@ on:
       - main
 
 jobs:
-  build-executable-windows:
-    runs-on: windows-latest
+  list-libraries :
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v3
@@ -17,18 +17,45 @@ jobs:
         with:
           python-version: 3.11.4
 
-      - name: 😀 Installation des librairies pyinstaller et pipreqs
+      - name: 📃 liste des librairies 
         run: |
-          pip install pyinstaller
           pip install pipreqs
-
-      - name: 😎 Installation des librairies du projet
-        run: |
           pipreqs . --force
-          pip install -r requirements.txt
+
+      - name: 📤 Transférer de la liste
+        uses: actions/upload-artifact@v3
+        with:
+          name: liste-librairies 
+          path: requirements.txt
+
+
+  build-executable-windows:
+    needs: list-libraries
+    runs-on: windows-latest
+
+    steps:
+      - name: 📥 Téléchargement des données
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: 🐍 Configuration de Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11.4
+
+      - name: 📦 Téléchargement de l'artefact
+        uses: actions/download-artifact@v2.1.1
+        with:
+          name: liste-librairies
+      
+      - name: 😎 Installation des librairies du projet
+        run: pip install -r requirements.txt
 
       - name: 🛠️ Construction de l'exécutable windows
-        run: pyinstaller --onedir -n StartProject -w --icon "Picture/App/logo.ico" --add-data "data_app;data_app" --add-data "flask_app;flask_app" --add-data "tkinter_app;tkinter_app" --add-data "Picture;Picture" --add-data "pystray_app;pystray_app" --add-data "utilities.py;." --add-data "index.html;." --add-data "README.md;." --add-data "LICENSE.md;." ./main.py
+        run: |
+          pip install pyinstaller
+          pyinstaller --onedir -n StartProject -w --icon "Picture/App/logo.ico" --add-data "data_app;data_app" --add-data "flask_app;flask_app" --add-data "tkinter_app;tkinter_app" --add-data "Picture;Picture" --add-data "pystray_app;pystray_app" --add-data "utilities.py;." --add-data "index.html;." --add-data "README.md;." --add-data "LICENSE.md;." ./main.py
         
       - name: 📂 Zipper le dossier StartProject - windows
         run: |
@@ -44,28 +71,32 @@ jobs:
 
 
   build-executable-linux:
+    needs: list-libraries
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - name: 📥 Téléchargement des données
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - uses: actions/setup-python@v4
+
+      - name: 🐍 Configuration de Python
+        uses: actions/setup-python@v4
         with:
           python-version: 3.11.4
 
-      - name: 😀 Installation des librairies pyinstaller et pipreqs
-        run: |
-          pip install pyinstaller
-          pip install pipreqs
+      - name: 📦 Téléchargement de l'artefact
+        uses: actions/download-artifact@v2.1.1
+        with:
+          name: liste-librairies
 
       - name: 😎 Installation des librairies du projet
-        run: |
-          pipreqs . --force
-          pip install -r requirements.txt
+        run: pip install -r requirements.txt
 
       - name: 🛠️ Construction de l'exécutable linux
-        run: pyinstaller --onedir -n StartProject -w --icon "Picture/App/logo.ico" --add-data "data_app:data_app" --add-data "flask_app:flask_app" --add-data "tkinter_app:tkinter_app" --add-data "Picture:Picture" --add-data "pystray_app:pystray_app" --add-data "utilities.py:." --add-data "index.html:." --add-data "README.md:." --add-data "LICENSE.md:." ./main.py
+        run: |
+          pip install pyinstaller
+          pyinstaller --onedir -n StartProject -w --icon "Picture/App/logo.ico" --add-data "data_app:data_app" --add-data "flask_app:flask_app" --add-data "tkinter_app:tkinter_app" --add-data "Picture:Picture" --add-data "pystray_app:pystray_app" --add-data "utilities.py:." --add-data "index.html:." --add-data "README.md:." --add-data "LICENSE.md:." ./main.py
       
       - name: 📂 Zipper le dossier StartProject - linux
         run: |
@@ -80,19 +111,95 @@ jobs:
           path: StartProject-linux.zip
   
 
-  send-release:
-    needs: [build-executable-windows, build-executable-linux]
-    runs-on: ubuntu-latest
+  build-executable-macos:
+    needs: list-libraries
+    runs-on: macos-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - name: 📥 Téléchargement des données
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - uses: actions/setup-python@v4
+
+      - name: 🐍 Configuration de Python
+        uses: actions/setup-python@v4
         with:
           python-version: 3.11.4
 
-      - name: 📥 Télécharger des executables
+      - name: 📦 Téléchargement de l'artefact
+        uses: actions/download-artifact@v2.1.1
+        with:
+          name: liste-librairies
+      
+      - name: 😎 Installation des librairies du projet
+        run: pip install -r requirements.txt
+
+      - name: 🛠️ Construction de l'exécutable macOS
+        run: |
+          pip install pyinstaller
+          pyinstaller --onedir -n StartProject -w --icon "Picture/App/logo.ico" --add-data "data_app;data_app" --add-data "flask_app;flask_app" --add-data "tkinter_app;tkinter_app" --add-data "Picture;Picture" --add-data "pystray_app;pystray_app" --add-data "utilities.py;." --add-data "index.html;." --add-data "README.md;." --add-data "LICENSE.md;." ./main.py
+        
+      - name: 📂 Zipper le dossier StartProject - macOS
+        run: |
+          cd dist
+          zip -r StartProject-macos.zip StartProject
+          mv StartProject-macos.zip ../
+
+      - name: 📤 Transférer de l'executable macOS
+        uses: actions/upload-artifact@v3
+        with:
+          name: executable-startproject-macos
+          path: StartProject-macos.zip
+
+
+  testing-windows:
+    needs: build-executable-windows
+    runs-on: windows-latest
+
+    steps:
+      - name: test
+        run: echo "test"
+
+
+  testing-linux:
+    needs: build-executable-linux
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: test
+        run: echo "test"
+
+  
+  testing-macos:
+    needs: build-executable-macos
+    runs-on: macos-latest
+
+    steps:
+      - name: test
+        run: echo "test"
+
+
+  send-release:
+    needs: [testing-windows, testing-linux, testing-macos]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Téléchargement des données
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: 🐍 Configuration de Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11.4
+
+      - name: 📦 Téléchargement de la liste
+        uses: actions/download-artifact@v2.1.1
+        with:
+          name: liste-librairies
+
+      - name: 📦 Téléchargement des executables
         uses: actions/download-artifact@v2.1.1
         with:
           name: executable-startproject
@@ -107,9 +214,7 @@ jobs:
       - name: 📃 Liste des bibliothèques utilisées
         id: format_libraries
         run: |
-          pip install pipreqs
-          pipreqs . --force
-          sed -i -E 's/(.*)==([0-9.]*)/- \1 - (_\2_), /' requirements.txt
+          sed -i -E 's/(.*)==([0-9.]*)/\1 - (_\2_), /' requirements.txt
           file_value=$(cat requirements.txt) 
 
           echo "file_value_var<<EOF" >> $GITHUB_OUTPUT
@@ -131,7 +236,7 @@ jobs:
             Pour plus d'informations et de conseils, veuillez vous référer aux fichiers [README](https://github.com/xen0r-star/StartProject/blob/main/README.md) et [LICENSE](https://github.com/xen0r-star/StartProject/blob/main/LICENSE.md).
 
             ### Bibliothèques Utilisées :
-            ${{ steps.format_libraries.outputs.file_value_var }}
+            - ${{ steps.format_libraries.outputs.file_value_var }} ...
             
             ---
             N'hésitez pas à explorer et à fournir des retours 👍 
