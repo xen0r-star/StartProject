@@ -5,6 +5,8 @@ import os
 import sys
 import logging
 import webbrowser
+from tkinter import *
+import webview 
 
 
 app = Flask(__name__, template_folder='templates/')
@@ -16,8 +18,6 @@ GITHUB_API_BASE_URL = "https://api.github.com"
 
 
 # Erreur
-logging.basicConfig(level=logging.INFO, filename='flask_app/errors.log')
-
 def custom_excepthook(exc_type, exc_value, exc_traceback):
     logging.error("Une erreur est survenue :", exc_info=(exc_type, exc_value, exc_traceback))
 
@@ -27,14 +27,16 @@ sys.excepthook = custom_excepthook
 def handle_all_errors(error):
     return render_template('Erreur.html')
 
-
+# Page login
 @app.route('/')
 def index():
     return render_template('login.html', client_id=CLIENT_ID)
 
+# Page succes
 access_token = None
 @app.route('/callback')
 def callback():
+    print("ok")
     code = request.args.get('code')
     if code:
         data = {
@@ -64,7 +66,7 @@ def exit():
     print("exit")
     webbrowser.open("https://xen0r-star.github.io/StartProject/")
     
-
-
-if __name__ == "__main__":
-    app.run(debug=False, use_debugger=False, use_reloader=False)
+  
+win_login = Tk() 
+webview.create_window('Login to github', app) 
+webview.start() 

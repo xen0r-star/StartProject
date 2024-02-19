@@ -183,7 +183,7 @@ def handle_parametre_button_click(event):
     color_selection(liste_button, "Parametre")
     global global_event
     global_event = event
-    Frame_parametre(event, content_frame, label_photo_user, text_label_user_name)
+    Frame_parametre(event, win, content_frame, label_photo_user, text_label_user_name)
 button_parametre.bind("<Button-1>", handle_parametre_button_click)
 
 

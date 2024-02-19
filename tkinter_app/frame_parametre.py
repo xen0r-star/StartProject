@@ -14,7 +14,7 @@ import flask_app.main_flask
 from tkinter_app.Widgets.CustomImageButton import CustomImageButton
 
 exit_thread = False  # Variable de contrôle partagée entre les threads
-def Frame_parametre(event, content_frame, label_photo_user, text_label_user_name):
+def Frame_parametre(event, win, content_frame, label_photo_user, text_label_user_name):
     delete_frame_content(content_frame) 
 
     data = load_data()
@@ -183,7 +183,7 @@ def Frame_parametre(event, content_frame, label_photo_user, text_label_user_name
     text_label.pack(side=TOP, anchor=W, padx=30)
 
     square_size = 34
-    canvas = Canvas(content_frame, height=(square_size + 10), bd=0, bg="green", highlightthickness=0)
+    canvas = Canvas(content_frame, height=(square_size + 10), bd=0, bg=color_content, highlightthickness=0)
     canvas.pack(side=TOP, fill=X, anchor=CENTER, padx=20, pady=5)
 
     colors = [color_menu, color_content, color_zone, color_text, color_soustext, color_autretext, color_scroll, color_icon_type]
@@ -200,7 +200,7 @@ def Frame_parametre(event, content_frame, label_photo_user, text_label_user_name
             canvas.create_rectangle(x1, y1, x2, y2, fill=colors[i-1], outline=color_icon_type)
 
     def Frame_colorpicker():
-        win_colorpicker = Tk()
+        win_colorpicker = Toplevel(win)
         win_colorpicker.title("Sélecteur de couleurs")
         win_colorpicker.iconbitmap("Picture/App/logo.ico")
         win_colorpicker.geometry("350x600")
@@ -216,7 +216,7 @@ def Frame_parametre(event, content_frame, label_photo_user, text_label_user_name
     )
     button_palette = Button(canvas, image=photo_palette, bg=color_content, cursor="hand2", bd=0, highlightthickness=0, highlightbackground="white", activebackground=color_content, command=Frame_colorpicker)
     button_palette.image = photo_palette
-    button_palette.pack(ipadx=5)
+    button_palette.pack(ipadx=5, ipady=2)
     canvas.create_window(((9 * square_size) + (8 * padx_size) + (2 * split_size) + square_size), 23, window=button_palette)
 
 

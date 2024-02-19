@@ -1,5 +1,6 @@
 from tkinter import *
 from PIL import Image, ImageTk
+import darkdetect
 
 from math import atan2, cos, sin, sqrt
 from tkinter.colorchooser import askcolor
@@ -8,9 +9,7 @@ class CustomPicker(Frame):
     def __init__(self, parent, **kwargs):
         super().__init__(parent, **kwargs)
 
-        color_systeme = "dark"
-
-        if color_systeme == "dark":
+        if darkdetect.isDark():
             color_fond = "#16161C"
             color_text = "#ffffff"
             color_stext = "#82828B"
@@ -20,6 +19,8 @@ class CustomPicker(Frame):
             color_text = "#000000"
             color_stext = "#3C3C41"
             color_line = "#000000"
+
+        self["bg"] = color_fond
 
         # Titre
         self.titre_label = Label(self, text="Sélecteur de couleurs", font=("Arial", 22), bg=color_fond, fg=color_text)
@@ -36,6 +37,7 @@ class CustomPicker(Frame):
         self.circle_picture = ImageTk.PhotoImage(
             image=Image.open("Picture/App/color_picker.png").resize((180, 180), Image.LANCZOS)
         )
+
         self.circle_label = Label(self.circle_frame, bg=color_fond, image=self.circle_picture, bd=0)
         self.circle_label.image = self.circle_picture
         self.circle_label.pack()
@@ -71,38 +73,38 @@ class CustomPicker(Frame):
 
 
         # couleur personnalisée
-        # self.customcolor_frame = Frame(self, bg=color_fond)
-        # self.customcolor_frame.pack(fill=X, anchor=CENTER, padx=20, pady=(25,15))
+        self.customcolor_frame = Frame(self, bg=color_fond)
+        self.customcolor_frame.pack(fill=X, anchor=CENTER, padx=20, pady=(25,15))
 
-        # self.customcolor1_frame = Frame(self.customcolor_frame, bg=color_fond)
-        # self.customcolor1_frame.pack(side=LEFT, fill=X, padx=5)
+        self.customcolor1_frame = Frame(self.customcolor_frame, bg=color_fond)
+        self.customcolor1_frame.pack(side=LEFT, fill=X, padx=5)
 
-        # self.label_customcolor1 = Label(self.customcolor1_frame, width=5, height=3, bg="red")
-        # self.label_customcolor1.pack(side=LEFT, padx=3)
-        # self.label_customcolor2 = Label(self.customcolor1_frame, width=5, height=3, bg="green")
-        # self.label_customcolor2.pack(side=LEFT, padx=3)
-        # self.label_customcolor3 = Label(self.customcolor1_frame, width=5, height=3, bg="blue")
-        # self.label_customcolor3.pack(side=LEFT, padx=3)
-
-
-        # self.customcolor2_frame = Frame(self.customcolor_frame, bg=color_fond)
-        # self.customcolor2_frame.pack(side=RIGHT, fill=X, padx=5)
-
-        # self.label_customcolor1 = Label(self.customcolor2_frame, width=5, height=3, bg="red")
-        # self.label_customcolor1.pack(side=LEFT, padx=3)
-        # self.label_customcolor2 = Label(self.customcolor2_frame, width=5, height=3, bg="green")
-        # self.label_customcolor2.pack(side=LEFT, padx=3)
-        # self.label_customcolor3 = Label(self.customcolor2_frame, width=5, height=3, bg="blue")
-        # self.label_customcolor3.pack(side=LEFT, padx=3)
+        self.label_customcolor1 = Label(self.customcolor1_frame, width=5, height=3, bg="red")
+        self.label_customcolor1.pack(side=LEFT, padx=3)
+        self.label_customcolor2 = Label(self.customcolor1_frame, width=5, height=3, bg="green")
+        self.label_customcolor2.pack(side=LEFT, padx=3)
+        self.label_customcolor3 = Label(self.customcolor1_frame, width=5, height=3, bg="blue")
+        self.label_customcolor3.pack(side=LEFT, padx=3)
 
 
-        # self.customcolor3_frame = Frame(self, bg="blue")
-        # self.customcolor3_frame.pack(side=TOP, fill=X, anchor=N)
+        self.customcolor2_frame = Frame(self.customcolor_frame, bg=color_fond)
+        self.customcolor2_frame.pack(side=RIGHT, fill=X, padx=5)
 
-        # self.label_customcolor1 = Label(self.customcolor3_frame, width=5, height=3, bg="red")
-        # self.label_customcolor1.pack(side=LEFT, padx=3)
-        # self.label_customcolor2 = Label(self.customcolor3_frame, width=5, height=3, bg="green")
-        # self.label_customcolor2.pack(side=LEFT, padx=3)
+        self.label_customcolor1 = Label(self.customcolor2_frame, width=5, height=3, bg="red")
+        self.label_customcolor1.pack(side=LEFT, padx=3)
+        self.label_customcolor2 = Label(self.customcolor2_frame, width=5, height=3, bg="green")
+        self.label_customcolor2.pack(side=LEFT, padx=3)
+        self.label_customcolor3 = Label(self.customcolor2_frame, width=5, height=3, bg="blue")
+        self.label_customcolor3.pack(side=LEFT, padx=3)
+
+
+        self.customcolor3_frame = Frame(self, bg="blue")
+        self.customcolor3_frame.pack(side=TOP, fill=X, anchor=N)
+
+        self.label_customcolor1 = Label(self.customcolor3_frame, width=5, height=3, bg="red")
+        self.label_customcolor1.pack(side=LEFT, padx=3)
+        self.label_customcolor2 = Label(self.customcolor3_frame, width=5, height=3, bg="green")
+        self.label_customcolor2.pack(side=LEFT, padx=3)
 
 
 

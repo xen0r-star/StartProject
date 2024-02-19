@@ -4,3 +4,4 @@ ex.py
 __pycache__
 env
 *.pyc
+.vscode
