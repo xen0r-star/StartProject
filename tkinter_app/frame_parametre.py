@@ -9,7 +9,7 @@ from data_app.data_json import save_data, load_data, load_info
 from tkinter_app.other_module import delete_frame_content
 from tkinter_app.Widgets.CustomPicker import CustomPicker
 from utilities import pseudo, content_folder
-import flask_app.main_flask
+# import flask_app.main_flask
 
 from tkinter_app.Widgets.CustomImageButton import CustomImageButton
 
@@ -244,7 +244,7 @@ def Frame_parametre(event, win, content_frame, label_photo_user, text_label_user
         global exit_thread
         print("lancer ok")
         while not exit_thread:
-            flask_app.main_flask.app.run(debug=False, use_debugger=False, use_reloader=False)
+            # flask_app.main_flask.app.run(debug=False, use_debugger=False, use_reloader=False)
             pass
 
     button_link_github.bind("<Button-1>", link_github)
