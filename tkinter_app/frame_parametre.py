@@ -182,7 +182,22 @@ def Frame_parametre(event, win, content_frame, label_photo_user, text_label_user
     text_label=Label(content_frame, text="Couleur application", font=("Arial", 17), bg=color_content, fg=color_text)
     text_label.pack(side=TOP, anchor=W, padx=30)
 
+
+    def Frame_colorpicker():
+        win_colorpicker = Toplevel(win)
+        win_colorpicker.title("Sélecteur de couleurs")
+        win_colorpicker.iconbitmap("Picture/App/logo.ico")
+        win_colorpicker.geometry("350x600")
+        win_colorpicker.resizable(False, False)
+
+        selected_color_frame = CustomPicker(win_colorpicker)
+        selected_color_frame.pack(fill=BOTH, expand=True)
+
+        win_colorpicker.mainloop()
+
+
     square_size = 34
+    # color 1
     canvas = Canvas(content_frame, height=(square_size + 10), bd=0, bg=color_content, highlightthickness=0)
     canvas.pack(side=TOP, fill=X, anchor=CENTER, padx=20, pady=5)
 
@@ -198,19 +213,7 @@ def Frame_parametre(event, win, content_frame, label_photo_user, text_label_user
             x2 = x1 + square_size
             y2 = square_size + y1
             canvas.create_rectangle(x1, y1, x2, y2, fill=colors[i-1], outline=color_icon_type)
-
-    def Frame_colorpicker():
-        win_colorpicker = Toplevel(win)
-        win_colorpicker.title("Sélecteur de couleurs")
-        win_colorpicker.iconbitmap("Picture/App/logo.ico")
-        win_colorpicker.geometry("350x600")
-        win_colorpicker.resizable(False, False)
-
-        selected_color_frame = CustomPicker(win_colorpicker)
-        selected_color_frame.pack(fill=BOTH, expand=True)
-
-        win_colorpicker.mainloop()
-
+    
     photo_palette = ImageTk.PhotoImage(
         image=Image.open("Picture/App/" + icon_type + "/Palette.png").resize((square_size, square_size), Image.LANCZOS)
     )
@@ -218,6 +221,32 @@ def Frame_parametre(event, win, content_frame, label_photo_user, text_label_user
     button_palette.image = photo_palette
     button_palette.pack(ipadx=5, ipady=2)
     canvas.create_window(((9 * square_size) + (8 * padx_size) + (2 * split_size) + square_size), 23, window=button_palette)
+
+    
+    # color 2
+    canvas = Canvas(content_frame, height=(square_size + 10), bd=0, bg=color_content, highlightthickness=0)
+    canvas.pack(side=TOP, fill=X, anchor=CENTER, padx=20, pady=5)
+
+    colors = [color_menu, color_content, color_zone, color_text, color_soustext, color_autretext, color_scroll, color_icon_type]
+    split = [(1,4), (4,7), (7, 9)]
+    split_size = 15
+    padx_size = 5
+
+    for frame_range in split:
+        for i in range(frame_range[0], frame_range[1]):
+            x1 = (i * square_size) + ((i - 1) * padx_size) + (math.floor((i-1) / 3) * split_size)
+            y1 = 44
+            x2 = x1 + square_size
+            y2 = square_size + y1
+            canvas.create_rectangle(x1, y1, x2, y2, fill=colors[i-1], outline=color_icon_type)
+
+    photo_palette = ImageTk.PhotoImage(
+        image=Image.open("Picture/App/" + icon_type + "/Palette.png").resize((square_size, square_size), Image.LANCZOS)
+    )
+    button_palette = Button(canvas, image=photo_palette, bg=color_content, cursor="hand2", bd=0, highlightthickness=0, highlightbackground="white", activebackground=color_content, command=Frame_colorpicker)
+    button_palette.image = photo_palette
+    button_palette.pack(ipadx=5, ipady=2)
+    canvas.create_window(((9 * square_size) + (8 * padx_size) + (2 * split_size) + square_size), 63, window=button_palette)
 
 
     # bouton connexion
