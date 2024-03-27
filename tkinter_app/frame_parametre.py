@@ -197,14 +197,15 @@ def Frame_parametre(event, win, content_frame, label_photo_user, text_label_user
 
 
     square_size = 34
+    split = [(1,4), (4,7), (7, 9)]
+    split_size = 15
+    padx_size = 5
+
     # color 1
     canvas = Canvas(content_frame, height=(square_size + 10), bd=0, bg=color_content, highlightthickness=0)
     canvas.pack(side=TOP, fill=X, anchor=CENTER, padx=20, pady=5)
 
     colors = [color_menu, color_content, color_zone, color_text, color_soustext, color_autretext, color_scroll, color_icon_type]
-    split = [(1,4), (4,7), (7, 9)]
-    split_size = 15
-    padx_size = 5
 
     for frame_range in split:
         for i in range(frame_range[0], frame_range[1]):
@@ -228,9 +229,6 @@ def Frame_parametre(event, win, content_frame, label_photo_user, text_label_user
     canvas.pack(side=TOP, fill=X, anchor=CENTER, padx=20, pady=5)
 
     colors = [color_menu, color_content, color_zone, color_text, color_soustext, color_autretext, color_scroll, color_icon_type]
-    split = [(1,4), (4,7), (7, 9)]
-    split_size = 15
-    padx_size = 5
 
     for frame_range in split:
         for i in range(frame_range[0], frame_range[1]):
@@ -246,7 +244,7 @@ def Frame_parametre(event, win, content_frame, label_photo_user, text_label_user
     button_palette = Button(canvas, image=photo_palette, bg=color_content, cursor="hand2", bd=0, highlightthickness=0, highlightbackground="white", activebackground=color_content, command=Frame_colorpicker)
     button_palette.image = photo_palette
     button_palette.pack(ipadx=5, ipady=2)
-    canvas.create_window(((9 * square_size) + (8 * padx_size) + (2 * split_size) + square_size), 63, window=button_palette)
+    canvas.create_window(((9 * square_size) + (8 * padx_size) + (2 * split_size) + square_size), 23, window=button_palette)
 
 
     # bouton connexion
