@@ -233,7 +233,7 @@ def Frame_parametre(event, win, content_frame, label_photo_user, text_label_user
     for frame_range in split:
         for i in range(frame_range[0], frame_range[1]):
             x1 = (i * square_size) + ((i - 1) * padx_size) + (math.floor((i-1) / 3) * split_size)
-            y1 = 44
+            y1 = 5
             x2 = x1 + square_size
             y2 = square_size + y1
             canvas.create_rectangle(x1, y1, x2, y2, fill=colors[i-1], outline=color_icon_type)
@@ -255,7 +255,7 @@ def Frame_parametre(event, win, content_frame, label_photo_user, text_label_user
     for frame_range in split:
         for i in range(frame_range[0], frame_range[1]):
             x1 = (i * square_size) + ((i - 1) * padx_size) + (math.floor((i-1) / 3) * split_size)
-            y1 = 44
+            y1 = 5
             x2 = x1 + square_size
             y2 = square_size + y1
             canvas.create_rectangle(x1, y1, x2, y2, fill=colors[i-1], outline=color_icon_type)
