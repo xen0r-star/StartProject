@@ -202,7 +202,7 @@ def Frame_parametre(event, win, content_frame, label_photo_user, text_label_user
     padx_size = 5
 
     # color 1
-    canvas = Canvas(content_frame, height=(square_size + 10), bd=0, bg=color_content, highlightthickness=0)
+    canvas = Canvas(content_frame, height=(square_size + 10), bd=0, bg="blue", highlightthickness=0)
     canvas.pack(side=TOP, fill=X, anchor=CENTER, padx=20, pady=5)
 
     colors = [color_menu, color_content, color_zone, color_text, color_soustext, color_autretext, color_scroll, color_icon_type]
@@ -225,7 +225,7 @@ def Frame_parametre(event, win, content_frame, label_photo_user, text_label_user
 
     
     # color 2
-    canvas = Canvas(content_frame, height=(square_size + 10), bd=0, bg=color_content, highlightthickness=0)
+    canvas = Canvas(content_frame, height=(square_size + 10), bd=0, bg="red", highlightthickness=0)
     canvas.pack(side=TOP, fill=X, anchor=CENTER, padx=20, pady=5)
 
     colors = [color_menu, color_content, color_zone, color_text, color_soustext, color_autretext, color_scroll, color_icon_type]
@@ -247,7 +247,7 @@ def Frame_parametre(event, win, content_frame, label_photo_user, text_label_user
     canvas.create_window(((9 * square_size) + (8 * padx_size) + (2 * split_size) + square_size), 23, window=button_palette)
 
     # color 3
-    canvas = Canvas(content_frame, height=(square_size + 10), bd=0, bg=color_content, highlightthickness=0)
+    canvas = Canvas(content_frame, height=(square_size + 10), bd=0, bg="green", highlightthickness=0)
     canvas.pack(side=TOP, fill=X, anchor=CENTER, padx=20, pady=5)
 
     colors = [color_menu, color_content, color_zone, color_text, color_soustext, color_autretext, color_scroll, color_icon_type]
