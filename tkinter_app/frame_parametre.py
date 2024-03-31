@@ -200,12 +200,13 @@ def Frame_parametre(event, win, content_frame, label_photo_user, text_label_user
     split = [(1,4), (4,7), (7, 9)]
     split_size = 15
     padx_size = 5
+    colors1 = [color_menu, color_content, color_zone, color_text, color_soustext, color_autretext, color_scroll, color_icon_type]
+    colors2 = [color_menu, color_content, color_zone, color_text, color_soustext, color_autretext, color_scroll, color_icon_type]
+    colors3 = [color_menu, color_content, color_zone, color_text, color_soustext, color_autretext, color_scroll, color_icon_type]
 
     # color 1
     canvas = Canvas(content_frame, height=(square_size + 10), bd=0, bg="blue", highlightthickness=0)
     canvas.pack(side=TOP, fill=X, anchor=CENTER, padx=20, pady=5)
-
-    colors = [color_menu, color_content, color_zone, color_text, color_soustext, color_autretext, color_scroll, color_icon_type]
 
     for frame_range in split:
         for i in range(frame_range[0], frame_range[1]):
@@ -213,7 +214,7 @@ def Frame_parametre(event, win, content_frame, label_photo_user, text_label_user
             y1 = 5
             x2 = x1 + square_size
             y2 = square_size + y1
-            canvas.create_rectangle(x1, y1, x2, y2, fill=colors[i-1], outline=color_icon_type)
+            canvas.create_rectangle(x1, y1, x2, y2, fill=colors1[i-1], outline=color_icon_type)
     
     photo_palette = ImageTk.PhotoImage(
         image=Image.open("Picture/App/" + icon_type + "/Palette.png").resize((square_size, square_size), Image.LANCZOS)
@@ -228,15 +229,13 @@ def Frame_parametre(event, win, content_frame, label_photo_user, text_label_user
     canvas = Canvas(content_frame, height=(square_size + 10), bd=0, bg="red", highlightthickness=0)
     canvas.pack(side=TOP, fill=X, anchor=CENTER, padx=20, pady=5)
 
-    colors = [color_menu, color_content, color_zone, color_text, color_soustext, color_autretext, color_scroll, color_icon_type]
-
     for frame_range in split:
         for i in range(frame_range[0], frame_range[1]):
             x1 = (i * square_size) + ((i - 1) * padx_size) + (math.floor((i-1) / 3) * split_size)
             y1 = 5
             x2 = x1 + square_size
             y2 = square_size + y1
-            canvas.create_rectangle(x1, y1, x2, y2, fill=colors[i-1], outline=color_icon_type)
+            canvas.create_rectangle(x1, y1, x2, y2, fill=colors2[i-1], outline=color_icon_type)
 
     photo_palette = ImageTk.PhotoImage(
         image=Image.open("Picture/App/" + icon_type + "/Palette.png").resize((square_size, square_size), Image.LANCZOS)
@@ -250,15 +249,13 @@ def Frame_parametre(event, win, content_frame, label_photo_user, text_label_user
     canvas = Canvas(content_frame, height=(square_size + 10), bd=0, bg="green", highlightthickness=0)
     canvas.pack(side=TOP, fill=X, anchor=CENTER, padx=20, pady=5)
 
-    colors = [color_menu, color_content, color_zone, color_text, color_soustext, color_autretext, color_scroll, color_icon_type]
-
     for frame_range in split:
         for i in range(frame_range[0], frame_range[1]):
             x1 = (i * square_size) + ((i - 1) * padx_size) + (math.floor((i-1) / 3) * split_size)
             y1 = 5
             x2 = x1 + square_size
             y2 = square_size + y1
-            canvas.create_rectangle(x1, y1, x2, y2, fill=colors[i-1], outline=color_icon_type)
+            canvas.create_rectangle(x1, y1, x2, y2, fill=colors3[i-1], outline=color_icon_type)
 
     photo_palette = ImageTk.PhotoImage(
         image=Image.open("Picture/App/" + icon_type + "/Palette.png").resize((square_size, square_size), Image.LANCZOS)
